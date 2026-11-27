@@ -1,0 +1,28 @@
+# Rakennus
+/node_modules
+/src-tauri/target
+/dist
+
+# Salaiset ja henkilokohtaiset (EI GitHubiin)
+/.avaimet
+/.avaimet*
+/CLAUDE.md
+/docs/claude-muisti
+/design
+*.key
+*.rar
+*.7z
+*.pem
+*.pfx
+*.p12
+
+# Asentimet ja vanhat varmuuskopiot (julkaisut tulevat GitHub Releasesista)
+*-setup.exe
+*.zip
+*.tgz
+/varmuus
+/design/varmuuskopiot
+
+# Muut
+Thumbs.db
+desktop.ini

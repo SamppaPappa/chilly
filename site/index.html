@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="fi" data-lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chilly – Twitch Windowsille (beta)</title>
+  <meta name="description" content="Chilly on ilmainen Twitch-sovellus Windowsille: omat live-ilmoitukset, multistream, chat BTTV- ja 7TV-emojeilla sekä automaattiset kanavapisteet ja dropit. Beta.">
+  <meta property="og:title" content="Chilly – Twitch Windowsille">
+  <meta property="og:description" content="Live-ilmoitukset, multistream, chat ja automaattiset lunastukset yhdessä ikkunassa. Ilmainen beta.">
+  <meta property="og:image" content="https://samppalandia.wtf/chilly/img/fi-main.webp?v=10">
+  <meta name="theme-color" content="#0d0f14">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css?v=10">
+  <link rel="stylesheet" href="assets/header.css?v=1">
+</head>
+<body>
+
+<div class="topbar">
+<!-- BETA – näkyy aina sivun yläreunassa -->
+<div class="beta-bar" role="note">
+  <div class="wrap">
+    <span class="beta-tag">BETA</span>
+    <p>
+      <span lang="fi">Chilly on vielä beta-vaiheessa, joten <b>bugeja voi löytyä</b>.<span class="hide-s"> Ilmoita niistä Discordissa – jokainen ilmoitus auttaa!</span></span>
+      <span lang="en">Chilly is still in beta, so <b>you may run into bugs</b>.<span class="hide-s"> Please report them on Discord – every report helps!</span></span>
+    </p>
+    <a href="https://discord.gg/5qBGnbjMdg" target="_blank" rel="noopener"><span lang="fi">Ilmoita bugista</span><span lang="en">Report a bug</span> →</a>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo.png" alt="">Chilly <span class="ver">BETA 0.2.4</span></a>
+    <nav class="links">
+      <a href="#ominaisuudet"><span lang="fi">Ominaisuudet</span><span lang="en">Features</span></a>
+      <a href="#esittely"><span lang="fi">Kuvat</span><span lang="en">Screenshots</span></a>
+      <a href="#opas"><span lang="fi">Käyttöopas</span><span lang="en">Guide</span></a>
+      <a href="#asennus"><span lang="fi">Asennus</span><span lang="en">Install</span></a>
+      <a href="#ukk"><span lang="fi">UKK</span><span lang="en">FAQ</span></a>
+      <a href="#bugit"><span lang="fi">Bugit</span><span lang="en">Bugs</span></a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="seg" aria-label="Kieli / Language"><button data-lang="fi">FI</button><button data-lang="en">EN</button></span>
+    <a class="btn primary small" href="Chilly_0.2.4_x64-setup.exe" download><i data-i="download" class="sm"></i><span class="lbl"><span lang="fi">Lataa</span><span lang="en">Download</span></span></a>
+  </div>
+</header>
+</div>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="stage">
+        <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+        <div class="frostgrid" aria-hidden="true"></div>
+        <canvas id="hdrfx" aria-hidden="true"></canvas>
+        <div class="orbit">
+          <div class="logo-float"><div class="bob logo-wrap"><img src="img/logo-512.webp" alt="Chilly" width="512" height="512"><div class="shine"></div></div></div>
+          <div class="mist" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="wordmark loop" id="wordmark" aria-label="Chilly"></div>
+      <h1>
+        <span lang="fi">Twitch Windowsille – <em>ilmoitukset, multistream ja chat</em> yhdessä ikkunassa.</span>
+        <span lang="en">Twitch for Windows – <em>notifications, multistream and chat</em> in one window.</span>
+      </h1>
+      <p class="lead">
+        <span lang="fi">Chilly kertoo, kun suosikkisi menevät liveen, ja näyttää striimit chatteineen samassa ohjelmassa – halutessasi ilman mainoksia. Kanavapisteet ja dropit se kerää puolestasi.</span>
+        <span lang="en">Chilly tells you when your favourites go live and shows their streams with chat in one app – without ads if you like. It collects channel points and drops for you.</span>
+      </p>
+      <div class="ctas">
+        <a class="btn primary" href="Chilly_0.2.4_x64-setup.exe" download><i data-i="download"></i><span lang="fi">Lataa Chilly Windowsille</span><span lang="en">Download Chilly for Windows</span></a>
+        <a class="btn ghost" href="#ominaisuudet"><span lang="fi">Mitä Chilly osaa?</span><span lang="en">What can it do?</span></a>
+      </div>
+      <div class="meta">
+        <span><i data-i="monitor" class="sm"></i>Windows 10 / 11 (64-bit)</span>
+        <span><i data-i="zap" class="sm"></i><span lang="fi">4,3 Mt · ilmainen</span><span lang="en">4.3 MB · free</span></span>
+        <span><i data-i="triangle-alert" class="sm"></i><span lang="fi">Beta 0.2.4</span><span lang="en">Beta 0.2.4</span></span>
+      </div>
+      <p class="ss-note"><span lang="fi">Windows varoittaa asennuksessa "tuntemattomasta julkaisijasta" – se on normaalia. <a href="#smartscreen">Näin ohitat sen →</a></span><span lang="en">Windows warns about an "unknown publisher" when installing – that's normal. <a href="#smartscreen">Here's how to continue →</a></span></p>
+    </div>
+
+    <div class="hero-shot">
+      <div class="shot">
+        <img data-src-fi="img/fi-main.webp?v=10" data-src-en="img/en-main.webp?v=10" src="img/fi-main.webp?v=10" width="1584" height="992"
+             data-alt-fi="Chilly: seuratut kanavat sivupalkissa, striimi ja chat" data-alt-en="Chilly: followed channels in the sidebar, the stream and its chat" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <!-- Chillyn oma ilmoitus (sama ulkoasu kuin sovelluksessa) -->
+      <div class="toast" aria-hidden="true">
+        <div class="av">S</div>
+        <div class="body">
+          <div class="kicker"><span class="dot"></span><span lang="fi">Live nyt</span><span lang="en">Live now</span></div>
+          <div class="name">SamppaPappa</div>
+          <div class="title"><span lang="fi">Moro! Testataan Chillyn uutta versiota 🌶️</span><span lang="en">Hey! Testing the new Chilly version 🌶️</span></div>
+          <div class="tmeta">Just Chatting · <span lang="fi">234 katsojaa</span><span lang="en">234 viewers</span></div>
+        </div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BETA ================= -->
+<section id="bugit" style="padding-top:24px">
+  <div class="wrap reveal">
+    <div class="beta-box">
+      <div class="ico"><i data-i="bug" class="lg"></i></div>
+      <div>
+        <span class="kick" style="color:var(--warn)"><span lang="fi">Tärkeää</span><span lang="en">Important</span></span>
+        <h2><span lang="fi">Chilly on beta-vaiheessa</span><span lang="en">Chilly is in beta</span></h2>
+        <p>
+          <span lang="fi">Chilly on uusi ja kehittyy koko ajan, joten bugeja voi vielä löytyä. Twitch myös muuttaa sivujaan välillä, mikä voi rikkoa jonkin ominaisuuden hetkeksi. Kun jokin ei toimi, kerro siitä Discordissa – korjaukset tulevat nopeasti uutena versiona.</span>
+          <span lang="en">Chilly is new and changes all the time, so there can still be bugs. Twitch also changes its pages now and then, which can break a feature for a while. When something doesn't work, tell us on Discord – fixes ship quickly as a new version.</span>
+        </p>
+        <ul>
+          <li><span lang="fi"><b>Mitä teit</b>, kun vika tuli (esim. "vaihdoin multistreamin paikat").</span><span lang="en"><b>What you did</b> when it happened (e.g. "I swapped the multistream positions").</span></li>
+          <li><span lang="fi"><b>Mitä tapahtui</b> ja mitä odotit tapahtuvan.</span><span lang="en"><b>What happened</b> and what you expected.</span></li>
+          <li><span lang="fi"><b>Kuvakaappaus</b>, jos mahdollista.</span><span lang="en">A <b>screenshot</b>, if you can.</span></li>
+          <li><span lang="fi"><b>Versionumero</b>: Asetukset → Tietoja.</span><span lang="en">The <b>version number</b>: Settings → About.</span></li>
+        </ul>
+        <p style="margin-top:14px"><span lang="fi"><b>Teknisiä ongelmia?</b> Kysy Discordin <b>𝙏𝙚𝙠𝙣𝙞𝙣𝙚𝙣𝙩𝙪𝙠𝙞-🖥</b> -kanavalla. Siellä on porukkaa, joka osaa auttaa.</span><span lang="en"><b>Technical problems?</b> Ask on the <b>𝙏𝙚𝙠𝙣𝙞𝙣𝙚𝙣𝙩𝙪𝙠𝙞-🖥</b> channel on Discord. People there know how to help.</span></p>
+        <div class="ctas">
+          <a class="btn discord" href="https://discord.gg/5qBGnbjMdg" target="_blank" rel="noopener">
+            <svg class="discord-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.319 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.042-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"/></svg>
+            <span lang="fi">Ilmoita bugista Discordissa</span><span lang="en">Report a bug on Discord</span>
+          </a>
+          <span class="muted"><span lang="fi">Myös ideat ja toiveet ovat tervetulleita!</span><span lang="en">Ideas and wishes are welcome too!</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OMINAISUUDET ================= -->
+<section id="ominaisuudet" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="sparkles" class="sm"></i><span lang="fi">Ominaisuudet</span><span lang="en">Features</span></span>
+      <h2><span lang="fi">Kaikki mitä Twitchissä tarvitset – ilman selainta</span><span lang="en">Everything you need from Twitch – without a browser</span></h2>
+      <p><span lang="fi">Chilly syntyi, koska Windowsille ei ollut enää hyvää Twitch-ohjelmaa. Tässä kaikki, mitä se osaa.</span><span lang="en">Chilly was born because there was no good Twitch app for Windows anymore. Here's everything it does.</span></p>
+    </div>
+
+    <div class="grid">
+      <div class="card reveal hot">
+        <div class="ico live"><i data-i="ban"></i></div>
+        <h3><span lang="fi">Mainosesto</span><span lang="en">Ad blocking</span> <span class="newtag">BETA</span></h3>
+        <p><span lang="fi">Twitchin videomainokset ja kuva kuvassa -mainokset pois. 7 tunnin testissä 45 mainosta → 0, eikä katseluaika kärsinyt. Päälle: Asetukset → Katselu.</span><span lang="en">Twitch video ads and picture-in-picture ads gone. In a 7-hour test 45 ads → 0, and watch time was unaffected. Turn on: Settings → Viewing.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico mag"><i data-i="bell-ring"></i></div>
+        <h3><span lang="fi">Omat live-ilmoitukset</span><span lang="en">Built-in live notifications</span></h3>
+        <p><span lang="fi">Tyylikäs ilmoitus ruudun kulmaan, kun kanava menee liveen – toimii, vaikka Windowsin ilmoitukset olisivat pois päältä. Valitset itse kanavat ja äänen.</span><span lang="en">A sleek pop-up in the corner of your screen when a channel goes live – works even with Windows notifications turned off. You pick the channels and the sound.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="monitor-play"></i></div>
+        <h3><span lang="fi">Katso suoraan Chillyssä</span><span lang="en">Watch right inside Chilly</span></h3>
+        <p><span lang="fi">Striimit välilehdille (10, tai rajatta asetuksista), järjestys raahaamalla, seuratut kanavat sivupalkissa ja striimin voi irrottaa omaan ikkunaansa.</span><span lang="en">Streams in tabs (10, or unlimited in settings), reorder by dragging, followed channels in the sidebar, and you can pop a stream out into its own window.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico tw"><i data-i="columns-2"></i></div>
+        <h3>Multistream</h3>
+        <p><span lang="fi">Kaksi striimiä samalla välilehdellä: rinnakkain, allekkain tai kuva kuvassa. Kaikki säädöt yhden Multistream-napin takana, ja kumman tahansa voi sulkea videon kulmasta.</span><span lang="en">Two streams on one tab: side by side, stacked or picture-in-picture. All controls behind one Multistream button, and either stream can be closed from its corner.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="message-square"></i></div>
+        <h3><span lang="fi">Chat BTTV- ja 7TV-emojeilla</span><span lang="en">Chat with BTTV & 7TV emotes</span></h3>
+        <p><span lang="fi">Twitchin oma chat ja FrankerFaceZ, BetterTTV- ja 7TV-emojit. Emojit täydentyvät Tabilla. Mainoskortit piilotettu. Chat vasemmalle, oikealle tai videon alle.</span><span lang="en">Twitch's own chat plus FrankerFaceZ, BetterTTV and 7TV emotes. Emotes complete with Tab. Promo cards hidden. Chat on the left, right or below the video.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico mag"><i data-i="gift"></i></div>
+        <h3><span lang="fi">Pisteet ja dropit automaattisesti</span><span lang="en">Points & drops on autopilot</span></h3>
+        <p><span lang="fi">Kanavapisteiden bonusarkut lunastetaan heti ja valmiit dropit 15 minuutin välein. Molemmat saa pois asetuksista.</span><span lang="en">Channel points bonus chests are claimed instantly and finished drops every 15 minutes. Both can be turned off in settings.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico live"><i data-i="volume-x"></i></div>
+        <h3><span lang="fi">Mykistys, jonka aikana olet yhä katsoja</span><span lang="en">Mute that still counts you as a viewer</span></h3>
+        <p><span lang="fi">Chilly mykistää striimin ohjelman tasolla, joten Twitch laskee sinut edelleen katsojaksi ja pisteet kertyvät.</span><span lang="en">Chilly mutes the stream at the app level, so Twitch still counts you as watching and your points keep growing.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="compass"></i></div>
+        <h3><span lang="fi">Löydä uusia striimaajia</span><span lang="en">Discover new streamers</span></h3>
+        <p><span lang="fi">Selaa pelin, kielen ja katsojamäärän mukaan – myös vähiten katsojia ensin, jos haluat tukea pieniä kanavia.</span><span lang="en">Browse by game, language and viewer count – even fewest viewers first if you want to support small channels.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico tw"><i data-i="info"></i></div>
+        <h3><span lang="fi">Striimin tiedot ja viive</span><span lang="en">Stream info and delay</span></h3>
+        <p><span lang="fi">Vie hiiri striimin päälle: otsikko, peli, katsojamäärä, kuinka kauan striimi on ollut livenä ja viive näkyvät hetken. ⋯-valikon Päivitä, jos striimi jää jälkeen.</span><span lang="en">Hover over a stream: title, game, viewer count, how long the stream has been live and the delay appear for a moment. Reload in the ⋯ menu if the stream falls behind.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico mag"><i data-i="scissors"></i></div>
+        <h3><span lang="fi">Seuraa, tilaa ja klippaa</span><span lang="en">Follow, subscribe and clip</span></h3>
+        <p><span lang="fi">Seuraa yhdellä painalluksella. Klippaa suoraan yläpalkista: anna otsikko ja valitse pituus 15–60 s – linkki on heti kopioitavissa.</span><span lang="en">Follow with one click. Clip right from the top bar: give it a title and pick a length of 15–60 s – the link is ready to copy.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="radio"></i></div>
+        <h3><span lang="fi">Raidit kulkevat mukana</span><span lang="en">Raids just work</span></h3>
+        <p><span lang="fi">Kun striimaaja raidaa, Chilly siirtää välilehden, chatin ja napit uuteen kanavaan – myös multistreamissa.</span><span lang="en">When a streamer raids, Chilly moves the tab, chat and buttons to the new channel – in multistream too.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico streak"><i data-i="streak"></i></div>
+        <h3><span lang="fi">Katseluputki pysyy päällä</span><span lang="en">Keep your watch streak</span></h3>
+        <p><span lang="fi">Laita liekki päälle kanavalle, niin Chilly avaa sen striimin itse taustalle mykistettynä, kun kanava menee liveen – myös ikkunan ollessa kiinni.</span><span lang="en">Turn on the flame for a channel and Chilly opens its stream by itself, muted in the background, when it goes live – even with the window closed.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="refresh-ccw"></i></div>
+        <h3><span lang="fi">Päivittyy itsestään</span><span lang="en">Updates itself</span></h3>
+        <p><span lang="fi">Uudesta versiosta tulee ilmoitus, ja Päivitä-napista Chilly lataa, tarkistaa ja asentaa sen itse. Asetukset säilyvät.</span><span lang="en">You get a pop-up about a new version, and the Update button makes Chilly download, verify and install it by itself. Your settings are kept.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico ice"><i data-i="volume-2"></i></div>
+        <h3><span lang="fi">Äänenvahvistin</span><span lang="en">Volume booster</span></h3>
+        <p><span lang="fi">Hiljainen striimi? Nosta ääntä 150, 200 tai 300 %. Rajoitin estää säröilyn. Pikasäätö suoraan yläpalkissa.</span><span lang="en">Quiet stream? Boost it to 150, 200 or 300 %. A limiter prevents distortion. Quick control right in the top bar.</span></p>
+      </div>
+      <div class="card reveal">
+        <div class="ico tw"><i data-i="shield"></i></div>
+        <h3>Mod View</h3>
+        <p><span lang="fi">Moderaattoreille: ⋯-valikosta Twitchin Mod View omaan ikkunaan. Nappi näkyy vain kanavilla, joilla olet moderaattori.</span><span lang="en">For moderators: Twitch's Mod View in its own window from the ⋯ menu. It only shows on channels you moderate.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ESITTELY ================= -->
+<section id="esittely">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="monitor-play" class="sm"></i><span lang="fi">Kuvat</span><span lang="en">Screenshots</span></span>
+      <h2><span lang="fi">Tältä Chilly näyttää</span><span lang="en">This is what Chilly looks like</span></h2>
+      <p><span lang="fi">Kuvat ovat oikeasta Chillystä oikeilla suomalaisilla striimeillä. Chattien viestit on sumennettu yksityisyyden vuoksi. Klikkaa kuvaa, niin se suurenee.</span><span lang="en">Real screenshots from Chilly with real Finnish streams. Chat messages are blurred for privacy. Click an image to enlarge it.</span></p>
+    </div>
+
+    <div class="feature reveal" id="taydennys">
+      <div class="crop-shot" style="width:min(370px,100%);justify-self:center"><img src="img/complete.webp?v=10" width="368" height="412" loading="lazy" data-alt-fi="Chatin täydennys: kap + Tab näyttää listan Kappa, KappaClaus, KappaCool (BetterTTV) …" data-alt-en="Chat completion: kap + Tab shows a list Kappa, KappaClaus, KappaCool (BetterTTV) …" alt=""></div>
+      <div>
+        <span class="kick"><i data-i="keyboard" class="sm"></i><span lang="fi">Uutta 0.2.2</span><span lang="en">New in 0.2.2</span></span>
+        <h3><span lang="fi">Emojit täydentyvät Tabilla – myös BTTV ja 7TV</span><span lang="en">Emotes complete with Tab – BTTV and 7TV too</span></h3>
+        <p><span lang="fi">Kirjoita chattiin emojin alku ja paina Tab, niin lista aukeaa. Samalla Tabilla valitset emojin.</span><span lang="en">Type the start of an emote in chat and press Tab to open the list. Tab again picks the emote.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Ei kaksoispistettä</b> – pelkkä alku ja Tab riittää.</span><span lang="en"><b>No colon needed</b> – just the start and Tab.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Kaikki emojit</b>: Twitch, FrankerFaceZ, BetterTTV ja 7TV. Lähde näkyy nimen perässä, ja alusta alkavat osumat tulevat ensin.</span><span lang="en"><b>All emotes</b>: Twitch, FrankerFaceZ, BetterTTV and 7TV. The source shows after the name, and matches that start with your text come first.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Nimet @-merkillä</b>: @samp + Tab → @SamppaPappa.</span><span lang="en"><b>Names with @</b>: @samp + Tab → @SamppaPappa.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Chat ▾ → Lisäasetukset</b> avaa chatin kaikki lisäasetukset omaan ikkunaansa: täydennys, emojivalikko, korostukset ja paljon muuta.</span><span lang="en"><b>Chat ▾ → More settings</b> opens all the extra chat settings in their own window: completion, emote menu, highlights and much more.</span></li>
+        </ul>
+        <p class="note"><i data-i="info" class="sm"></i><span><span lang="fi"><b>Myös 0.2.2:ssa:</b> striimin tiedoissa näkyy, kuinka kauan striimi on ollut livenä (ylin kuva), ja 10 välilehden rajan saa pois: Asetukset → Katselu → Ei välilehtirajaa.</span><span lang="en"><b>Also in 0.2.2:</b> stream info shows how long the stream has been live (top screenshot), and the 10-tab limit can be removed: Settings → Viewing → No tab limit.</span></span></p>
+      </div>
+    </div>
+    <div class="feature flip reveal" id="mainosesto">
+      <div class="ad-stats">
+        <div class="ad-row head"><span></span><span lang="fi">Ilman estoa</span><span lang="en">Blocking off</span><span lang="fi">Esto päällä</span><span lang="en">Blocking on</span></div>
+        <div class="ad-row"><span lang="fi">Täysmainokset</span><span lang="en">Full ads</span><b class="bad">2</b><b class="good">0</b></div>
+        <div class="ad-row"><span lang="fi">Kuva kuvassa -mainokset</span><span lang="en">Picture-in-picture ads</span><b class="bad">43</b><b class="good">0</b></div>
+        <div class="ad-row"><span lang="fi">Jumit</span><span lang="en">Stalls</span><b>1</b><b class="good">0</b></div>
+        <div class="ad-row"><span lang="fi">Viive keskimäärin</span><span lang="en">Average delay</span><b>2,4 s</b><b>2,4 s</b></div>
+        <div class="ad-row"><span lang="fi">Katseluminuutit Twitchille</span><span lang="en">Watch minutes counted by Twitch</span><b class="good">✓</b><b class="good">✓</b></div>
+        <p class="ad-note"><span lang="fi"><b>Mistä luvut ovat?</b> Oma yötesti 13.–14.11.2026: 7 tuntia, 63 kanavaa (myös suomalaisia), kirjautunut Twitch-tili ilman Turboa tai tilauksia. Jokainen kanava pyöri yhtä aikaa kahdesti – esto pois ja päällä – ja mainokset ja katseluminuutit laskettiin Twitchin omista tapahtumista. Lyhyempi testi ilman kirjautumista: 5 mainosta → 0.</span><span lang="en"><b>Where do the numbers come from?</b> Our own overnight test on 13–14 Nov 2026: 7 hours, 63 channels (Finnish ones too), a logged-in Twitch account without Turbo or subscriptions. Every channel ran twice at the same time – blocking off and on – and ads and watch minutes were counted from Twitch's own events. A shorter test without logging in: 5 ads → 0.</span></p>
+      </div>
+      <div>
+        <span class="kick" style="color:var(--live)"><i data-i="ban" class="sm"></i><span lang="fi">Uutta 0.2.0 · Beta</span><span lang="en">New in 0.2.0 · Beta</span></span>
+        <h3><span lang="fi">Mainosesto – striimit ilman mainoskatkoja</span><span lang="en">Ad blocking – streams without ad breaks</span></h3>
+        <p><span lang="fi">Chilly estää Twitchin videomainokset: ei mainoskatkoja striimin alussa eikä kesken, eikä kuva kuvassa -mainoksia.</span><span lang="en">Chilly blocks Twitch video ads: no ad breaks at the start or in the middle of a stream, and no picture-in-picture ads.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Kytke päälle:</b> Asetukset → Katselu → Mainosesto (beta). Oletuksena pois.</span><span lang="en"><b>Turn on:</b> Settings → Viewing → Ad blocking (beta). Off by default.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Katseluaika</b> kertyy normaalisti – mitattu Twitchin omista tapahtumista.</span><span lang="en"><b>Watch time</b> keeps counting normally – measured from Twitch's own events.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi">Mainoksen kohdalla voi näkyä hetken latausta tai heikompi laatu.</span><span lang="en">During an ad you may see a moment of loading or lower quality.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi">Koskee uusia striimejä heti, jo auki olevia uudelleenkäynnistyksen jälkeen (Chilly kysyy).</span><span lang="en">Applies to new streams right away, to open ones after a restart (Chilly asks).</span></li>
+        </ul>
+        <p class="note"><i data-i="info" class="sm"></i><span><span lang="fi"><b>Beta:</b> Twitch muuttaa mainoksiaan välillä, joten esto voi joskus lakata toimimasta hetkeksi. Jos striimi jumittaa, kytke esto pois ja kerro Discordissa.</span><span lang="en"><b>Beta:</b> Twitch changes its ads now and then, so blocking may stop working for a while. If a stream stutters, turn it off and tell us on Discord.</span></span></p>
+      </div>
+    </div>
+
+    <div class="feature reveal" id="katseluputki">
+      <div class="shot">
+        <img data-src-fi="img/fi-streak-settings.webp?v=11" data-src-en="img/en-streak-settings.webp?v=11" src="img/fi-streak-settings.webp?v=11" width="1000" height="570" loading="lazy"
+             data-alt-fi="Asetukset → Katseluputki: liekitettyjen kanavien tärkeysjärjestys raahaamalla (#1, #2, #3…)" data-alt-en="Settings → Watch streak: drag-to-reorder priority list for flame channels (#1, #2, #3…)" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <div>
+        <span class="kick" style="color:#ffb020"><i data-i="streak" class="sm"></i><span lang="fi">Päivitetty 0.2.3</span><span lang="en">Updated in 0.2.3</span></span>
+        <h3><span lang="fi">Katseluputki pysyy päällä – vaikka et ehtisi katsomaan</span><span lang="en">Keep your watch streak – even when you can't watch</span></h3>
+        <p><span lang="fi">Kanavalistan jokaisella rivillä on liekkinappi. Kun liekki on päällä (keltaoranssi), Chilly huolehtii kanavan katselusta puolestasi.</span><span lang="en">Every row in the channel list has a flame button. When the flame is on (amber), Chilly takes care of watching that channel for you.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Avautuu itsestään</b>, kun kanava menee liveen – myös jos se on jo livenä, kun Chilly käynnistyy.</span><span lang="en"><b>Opens by itself</b> when the channel goes live – also if it's already live when Chilly starts.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Taustavälilehdelle mykistettynä</b> – ei keskeytä sitä mitä katsot.</span><span lang="en"><b>Muted, in a background tab</b> – it doesn't interrupt what you're watching.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Pyörii myös ikkuna kiinni</b> ilmoitusalueella, joten katseluputki, katseluaika ja kanavapisteet kertyvät.</span><span lang="en"><b>Keeps running with the window closed</b> in the tray, so your watch streak, watch time and channel points keep growing.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Sulkeutuu itsestään</b>, kun striimi on loppunut (3 min katkosvara).</span><span lang="en"><b>Closes by itself</b> when the stream has ended (3-minute grace period).</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Tärkeysjärjestys raahaamalla:</b> järjestä liekitetyt kanavat kohdassa <b>Asetukset → Katseluputki</b> – ylimmät 2 saavat etusijan, jos useampi on livenä yhtä aikaa.</span><span lang="en"><b>Drag-to-reorder priority:</b> sort your flame channels in <b>Settings → Watch streak</b> – the top 2 get priority if more are live at once.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Raidivieraat väistyvät:</b> jos liekitetty striimi raidaa vieraalle kanavalle, se saa pyöriä kunnes tärkeämpi liekitetty tarvitsee paikan (tai se lopettaa). Itse avaamisiasi striimejä ei suljeta koskaan.</span><span lang="en"><b>Raid guests step aside:</b> if a flame stream raids an unflamed channel, it keeps playing until a higher-priority flame needs the slot (or it ends). Streams you opened yourself are never closed.</span></li>
+        </ul>
+        <p class="note"><i data-i="info" class="sm"></i><span><span lang="fi"><b>Huom:</b> Twitch laskee katsotuksi enintään 2 striimiä kerrallaan. Siksi Katseluputki pitää auki enintään 2 live-striimiä (mukaan lukien itse katsomasi) tärkeysjärjestyksesi mukaan.</span><span lang="en"><b>Note:</b> Twitch counts at most 2 streams at a time. That's why Watch streak keeps at most 2 live streams open (including ones you're watching) in your priority order.</span></span></p>
+      </div>
+    </div>
+
+    <div class="feature flip reveal" id="paivitykset">
+      <div class="upd-demo">
+        <div class="crop-shot">
+          <img data-src-fi="img/update-fi.webp?v=11" data-src-en="img/update-en.webp?v=11" src="img/update-fi.webp?v=11" width="1000" height="490" loading="lazy"
+               data-alt-fi="Asetukset → Yleiset: uusi versio saatavilla ja Päivitä nyt -nappi" data-alt-en="Settings → General: new version available and Update now button" alt="">
+        </div>
+        <!-- Chillyn päivitysilmoitus (sama ulkoasu kuin sovelluksessa) -->
+        <div class="toast upd" aria-hidden="true">
+          <div class="tile"><i data-i="download"></i></div>
+          <div class="body">
+            <div class="kicker"><span lang="fi">Päivitys saatavilla</span><span lang="en">Update available</span></div>
+            <div class="name">Chilly 0.2.3</div>
+            <div class="tmeta"><span lang="fi">Katseluputken tärkeysjärjestys ja bugikorjaukset…</span><span lang="en">Watch streak priority order and bug fixes…</span></div>
+            <div class="acts"><span class="act primary"><i data-i="download" class="sm"></i><span lang="fi">Päivitä</span><span lang="en">Update</span></span><span class="act"><span lang="fi">Myöhemmin</span><span lang="en">Later</span></span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="kick"><i data-i="refresh-ccw" class="sm"></i><span lang="fi">Uutta 0.1.9</span><span lang="en">New in 0.1.9</span></span>
+        <h3><span lang="fi">Päivittyy itsestään – yhdellä napilla</span><span lang="en">Updates itself – with one click</span></h3>
+        <p><span lang="fi">Chilly tarkistaa päivitykset käynnistyessä ja kerran päivässä. Kun uusi versio on saatavilla, ruudun kulmaan tulee ilmoitus.</span><span lang="en">Chilly checks for updates on startup and once a day. When a new version is available, a pop-up appears in the corner of your screen.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Päivitä</b> – Chilly lataa uuden version, asentaa sen ja käynnistyy uudelleen. Asetukset säilyvät.</span><span lang="en"><b>Update</b> – Chilly downloads the new version, installs it and restarts. Your settings are kept.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Myöhemmin</b> – muistutus tulee taas seuraavana päivänä.</span><span lang="en"><b>Later</b> – you'll be reminded again the next day.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Asetukset → Yleiset</b>: tarkista päivitykset itse ja katso mitä uutta (kotisivulinkki löytyy kohdasta Asetukset → Tietoja).</span><span lang="en"><b>Settings → General</b>: check for updates yourself and see what's new (the website link is in Settings → About).</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Turvallinen</b>: jokainen päivitys tarkistetaan digitaalisella allekirjoituksella – vain aito Chilly asentuu.</span><span lang="en"><b>Safe</b>: every update is checked with a digital signature – only genuine Chilly gets installed.</span></li>
+        </ul>
+        <p class="muted" style="font-size:14px"><span lang="fi">Versio 0.1.9 on ensimmäinen, joka osaa päivittää itsensä, joten se asennetaan vielä kerran käsin.</span><span lang="en">Version 0.1.9 is the first that can update itself, so it needs to be installed manually once.</span></p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="shot">
+        <img data-src-fi="img/fi-multi.webp?v=10" data-src-en="img/en-multi.webp?v=10" src="img/fi-multi.webp?v=10" width="1584" height="992" loading="lazy"
+             data-alt-fi="Multistream: kaksi striimiä rinnakkain tietopaneeleineen ja molempien chatit" data-alt-en="Multistream: two streams side by side with both chats" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <div>
+        <span class="kick">Multistream</span>
+        <h3><span lang="fi">Kaksi striimiä, kaksi chattia, sinä päätät</span><span lang="en">Two streams, two chats, your call</span></h3>
+        <p><span lang="fi">Lisää välilehdelle toinen striimi plus-napista. Yläpalkin <b>Multistream ▾</b> -napista aukeavat kaikki säädöt.</span><span lang="en">Add a second stream to a tab with the plus button. The <b>Multistream ▾</b> button in the top bar opens all the controls.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Asettelu:</b> rinnakkain, allekkain tai kuva kuvassa.</span><span lang="en"><b>Layout:</b> side by side, stacked or picture-in-picture.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Sulje toinen:</b> vie hiiri striimin päälle → ✕ kulmassa, tai Multistream-valikosta. Jäljelle jäävä täyttää tilan.</span><span lang="en"><b>Close one:</b> hover a stream → ✕ in its corner, or from the Multistream menu. The other one fills the space.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Kun striimi loppuu:</b> raidin perässä Chilly siirtyy uudelle kanavalle, muuten loppunut striimi sulkeutuu itsestään.</span><span lang="en"><b>When a stream ends:</b> after a raid Chilly follows to the new channel, otherwise the ended stream closes by itself.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Ääni:</b> vain toisesta tai molemmista – kummankin kulmassa oma mykistysnappi.</span><span lang="en"><b>Audio:</b> from one or both – each has its own mute button in the corner.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Chat</b> (Chat ▾ -valikosta): välilehdillä tai molemmat yhtä aikaa rinnakkain/allekkain.</span><span lang="en"><b>Chat</b> (from the Chat ▾ menu): as tabs, or both at once side by side or stacked.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Paikanvaihto</b> välittömästi – mikään ei lataudu uudelleen.</span><span lang="en"><b>Swap positions</b> instantly – nothing reloads.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Tietopaneeli:</b> hiiri striimin päälle → otsikko, peli, katsojat ja viive.</span><span lang="en"><b>Info panel:</b> hover the stream → title, game, viewers and delay.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <figure class="bar-row reveal">
+      <div class="crop-shot"><img data-src-fi="img/fi-msbar.webp?v=10" data-src-en="img/en-msbar.webp?v=10" src="img/fi-msbar.webp?v=10" width="1320" height="53" loading="lazy" data-alt-fi="Multistream-säätimet yläpalkissa" data-alt-en="Multistream controls in the top bar" alt=""></div>
+      <figcaption><span lang="fi"><b>Multistream ▾</b> avaa säätimet yläpalkin päälle: asettelu, paikkojen vaihto ja kummankin striimin sulkeminen. Chatit välilehdille tai rinnakkain valitaan <b>Chat ▾</b> -valikosta.</span><span lang="en"><b>Multistream ▾</b> opens the controls over the top bar: layout, swap places and closing either stream. Chats as tabs or side by side are chosen in the <b>Chat ▾</b> menu.</span></figcaption>
+    </figure>
+
+    <div class="feature flip reveal">
+      <div class="shot">
+        <img data-src-fi="img/fi-discover.webp?v=10" data-src-en="img/en-discover.webp?v=10" src="img/fi-discover.webp?v=10" width="1584" height="992" loading="lazy"
+             data-alt-fi="Löydä-osio: kategoriat ja suomenkieliset livestriimit" data-alt-en="Discover: categories and Finnish live streams" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <div>
+        <span class="kick"><span lang="fi">Löydä</span><span lang="en">Discover</span></span>
+        <h3><span lang="fi">Uusia striimaajia sekunneissa</span><span lang="en">New streamers in seconds</span></h3>
+        <p><span lang="fi">Kompassi-napista aukeaa Löydä-näkymä. Suodata ja avaa striimi suoraan välilehdelle.</span><span lang="en">The compass button opens Discover. Filter and open a stream straight into a tab.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi">Peli tai kategoria ja striimin kieli.</span><span lang="en">Game or category, and stream language.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi">Eniten tai <b>vähiten</b> katsojia ensin.</span><span lang="en">Most or <b>fewest</b> viewers first.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi">"Ei seuratut" piilottaa jo seuraamasi kanavat.</span><span lang="en">"Not followed" hides channels you already follow.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="shot">
+        <img data-src-fi="img/fi-offline.webp?v=10" data-src-en="img/en-offline.webp?v=10" src="img/fi-offline.webp?v=10" width="1584" height="992" loading="lazy"
+             data-alt-fi="Offline-kanavan sivu: suosituimmat klipit ja kanavan tiedot" data-alt-en="Offline channel page: top clips and channel info" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <div>
+        <span class="kick"><span lang="fi">Kanavasivu</span><span lang="en">Channel page</span></span>
+        <h3><span lang="fi">Offline? Katso klipit.</span><span lang="en">Offline? Watch the clips.</span></h3>
+        <p><span lang="fi">Kun kanava ei ole livenä, Chilly näyttää oman siistin kanavasivun: suosituimmat klipit, seuraajamäärä, viimeisin live ja Seuraa/Tilaa-napit. Klipit toistuvat Chillyssä.</span><span lang="en">When a channel isn't live, Chilly shows its own clean channel page: top clips, follower count, last live and Follow/Subscribe buttons. Clips play inside Chilly.</span></p>
+      </div>
+    </div>
+
+    <div class="feature wide reveal" id="klipit">
+      <div class="crop-shot"><img data-src-fi="img/fi-clip.webp?v=10" data-src-en="img/en-clip.webp?v=10" src="img/fi-clip.webp?v=10" width="1320" height="53" loading="lazy" data-alt-fi="Klippirivi yläpalkissa: otsikko, pituus ja Tee klippi" data-alt-en="Clip row in the top bar: title, length and Create clip" alt=""></div>
+      <div class="wide-body">
+      <div class="clip-demo">
+        <!-- Chillyn klippi-ilmoitus (sama ulkoasu kuin sovelluksessa) -->
+        <div class="toast upd static" aria-hidden="true">
+          <div class="tile"><i data-i="scissors"></i></div>
+          <div class="body">
+            <div class="kicker">Roraki</div>
+            <div class="name"><span lang="fi">Klippi valmis</span><span lang="en">Clip ready</span></div>
+            <div class="acts"><span class="act primary"><i data-i="copy" class="sm"></i><span lang="fi">Kopioi linkki</span><span lang="en">Copy link</span></span><span class="act"><i data-i="external-link" class="sm"></i><span lang="fi">Avaa</span><span lang="en">Open</span></span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="kick"><i data-i="scissors" class="sm"></i><span lang="fi">Uutta 0.2.0</span><span lang="en">New in 0.2.0</span></span>
+        <h3><span lang="fi">Klippaa juuri niin kuin haluat</span><span lang="en">Clip exactly the way you want</span></h3>
+        <p><span lang="fi">Paina <b>Klippaa</b>, niin yläpalkkiin aukeaa klippirivi – video ei peity.</span><span lang="en">Press <b>Clip</b> and a clip row opens in the top bar – the video stays visible.</span></p>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Otsikko</b> (vapaaehtoinen) ja <b>pituus</b> 15, 30, 45 tai 60 s.</span><span lang="en">A <b>title</b> (optional) and a <b>length</b> of 15, 30, 45 or 60 s.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Hetki ei karkaa:</b> otsikon kirjoittamiseen kulunut aika lisätään pituuteen (enintään 60 s).</span><span lang="en"><b>The moment doesn't slip away:</b> the time you spend typing is added to the length (up to 60 s).</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Enter</b> tekee klipin, <b>Esc</b> peruu.</span><span lang="en"><b>Enter</b> creates the clip, <b>Esc</b> cancels.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi">Valmiista klipistä tulee ilmoitus: <b>Kopioi linkki</b> tai <b>Avaa</b> katsottavaksi.</span><span lang="en">When it's ready you get a pop-up: <b>Copy link</b> or <b>Open</b> to watch it.</span></li>
+        </ul>
+      </div>
+      </div>
+    </div>
+
+    <div class="feature reveal" id="kanavalista">
+      <div class="side-demo">
+        <div class="crop-shot side-shot"><img data-src-fi="img/fi-side.webp?v=10" data-src-en="img/en-side.webp?v=10" src="img/fi-side.webp?v=10" width="264" height="299" loading="lazy" data-alt-fi="Kanavalista: liekki ja kello merkkeinä, napit hiiren alla" data-alt-en="Channel list: flame and bell as markers, buttons on hover" alt=""></div>
+      </div>
+      <div>
+        <span class="kick"><i data-i="layout-panel-left" class="sm"></i><span lang="fi">Kanavalista</span><span lang="en">Channel list</span></span>
+        <h3><span lang="fi">Kaikki tärkeä yhdellä silmäyksellä</span><span lang="en">Everything important at a glance</span></h3>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Katsojamäärä</b> nimen vieressä ja <b>peli</b> koko rivin levyisenä.</span><span lang="en"><b>Viewer count</b> next to the name and the <b>game</b> across the whole row.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Pienet merkit</b> nimen perässä: <span class="flame-ic"><i data-i="streak" class="sm"></i></span> katseluputki ja <span class="bell-ic"><i data-i="bell" class="sm"></i></span> ilmoitukset päällä.</span><span lang="en"><b>Small markers</b> after the name: <span class="flame-ic"><i data-i="streak" class="sm"></i></span> watch streak and <span class="bell-ic"><i data-i="bell" class="sm"></i></span> notifications on.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Napit hiiren alla:</b> liekki, kello ja ⋯ (oma ilmoitusääni, testi, poista).</span><span lang="en"><b>Buttons on hover:</b> flame, bell and ⋯ (own notification sound, test, remove).</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Offline-osion</b> saa taitettua kokoon klikkaamalla otsikkoa – Chilly muistaa valinnan.</span><span lang="en">Fold the <b>Offline</b> section by clicking its heading – Chilly remembers it.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature flip reveal">
+      <div class="shot">
+        <img data-src-fi="img/fi-settings.webp?v=10" data-src-en="img/en-settings.webp?v=10" src="img/fi-settings.webp?v=10" width="1584" height="992" loading="lazy"
+             data-alt-fi="Asetukset → Katselu: chatin paikka, äänenvahvistin, mainosesto, välilehtiraja ja laitekiihdytys" data-alt-en="Settings → Viewing: chat position, volume booster, ad blocking, tab limit and hardware acceleration" alt="">
+        <span class="zoom"><i data-i="maximize-2" class="sm"></i></span>
+      </div>
+      <div>
+        <span class="kick"><span lang="fi">Asetukset</span><span lang="en">Settings</span></span>
+        <h3><span lang="fi">Säädä Chilly omanlaiseksesi</span><span lang="en">Make Chilly yours</span></h3>
+        <ul class="ticks">
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Yleiset:</b> kieli, käynnistys Windowsin mukana ja päivitykset.</span><span lang="en"><b>General:</b> language, start with Windows and updates.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Ilmoitukset:</b> ääni, kesto ja tarkistusväli (30 s – 15 min).</span><span lang="en"><b>Notifications:</b> sound, duration and check interval (30 s – 15 min).</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Katselu:</b> chatin paikka, äänenvahvistin, mainosesto (beta), välilehtiraja ja laitekiihdytys.</span><span lang="en"><b>Viewing:</b> chat position, volume booster, ad blocking (beta), tab limit and hardware acceleration.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Multistream:</b> ääni yhdestä vai molemmista, chatit välilehdillä vai rinnakkain.</span><span lang="en"><b>Multistream:</b> audio from one or both, chats as tabs or side by side.</span></li>
+          <li><i data-i="check" class="sm"></i><span lang="fi"><b>Chat, Lunastukset, Moderointi, Tili ja Tietoja</b> – kaikki <a href="#opas-asetukset">käyttöoppaassa</a>.</span><span lang="en"><b>Chat, Auto-claim, Moderation, Account and About</b> – all in the <a href="#opas-asetukset">guide</a>.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KÄYTTÖOPAS ================= -->
+<section id="opas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="info" class="sm"></i><span lang="fi">Käyttöopas</span><span lang="en">Guide</span></span>
+      <h2><span lang="fi">Mitä tämä nappi tekee?</span><span lang="en">What does this button do?</span></h2>
+      <p><span lang="fi">Tästä löydät jokaisen Chillyn napin ja toiminnon. Avaa aihe, niin näet ohjeet.</span><span lang="en">Here you'll find every Chilly button and feature. Open a topic to see how it works.</span></p>
+    </div>
+
+    <div class="keys-wrap reveal">
+      <div class="keys">
+        <h4><span lang="fi">Yläpalkki</span><span lang="en">Top bar</span></h4>
+        <div class="key"><span class="kico"><i data-i="plus" class="sm"></i></span><div><b><span lang="fi">Lisää striimaaja</span><span lang="en">Add streamer</span></b><span><span lang="fi">Toinen striimi samalle välilehdelle (multistream).</span><span lang="en">A second stream on the same tab (multistream).</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="columns-2" class="sm"></i></span><div><b><span lang="fi">Multistream ▾</span><span lang="en">Multistream ▾</span></b><span><span lang="fi">Asettelu, paikkojen vaihto ja kummankin striimin sulkeminen.</span><span lang="en">Layout, swap places and closing either stream.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="message-square" class="sm"></i></span><div><b><span lang="fi">Chat ▾</span><span lang="en">Chat ▾</span></b><span><span lang="fi">Näytä tai piilota chat, chatin paikka (vasen / alla / oikea), multistreamin chatit ja BTTV/7TV-emojit.</span><span lang="en">Show or hide the chat, its position (left / below / right), multistream chats and BTTV/7TV emotes.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="volume-2" class="sm"></i></span><div><b><span lang="fi">Mykistä</span><span lang="en">Mute</span></b><span><span lang="fi">Mykistää Chillyssä – Twitch laskee katselun ja pisteet silti.</span><span lang="en">Mutes in Chilly – Twitch still counts your view and points.</span></span></div></div>
+        <div class="key"><span class="kico"><span class="pill">100%</span></span><div><b><span lang="fi">Äänenvahvistin</span><span lang="en">Volume booster</span></b><span><span lang="fi">Klikkaus vaihtaa 100 → 150 → 200 → 300 %.</span><span lang="en">Each click: 100 → 150 → 200 → 300 %.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="ellipsis" class="sm"></i></span><div><b><span lang="fi">⋯ Lisää</span><span lang="en">⋯ More</span></b><span><span lang="fi"><b>Päivitä striimi</b> (jos se jää jälkeen tai jumittaa), <b>Irrota</b> omaan ikkunaan ja <b>Mod View</b> (moderoimillasi kanavilla).</span><span lang="en"><b>Reload stream</b> (if it falls behind or stutters), <b>Pop out</b> to its own window and <b>Mod View</b> (on channels you moderate).</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="scissors" class="sm"></i></span><div><b><span lang="fi">Klippaa</span><span lang="en">Clip</span></b><span><span lang="fi">Avaa klippirivin: otsikko, pituus ja Tee klippi.</span><span lang="en">Opens the clip row: title, length and Create clip.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="star" class="sm"></i></span><div><b><span lang="fi">Tilaa</span><span lang="en">Subscribe</span></b><span><span lang="fi">Twitchin oma tilaussivu Chillyn ikkunassa.</span><span lang="en">Twitch's own subscribe page in a Chilly window.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="heart" class="sm"></i></span><div><b><span lang="fi">Seuraa / Seurattu</span><span lang="en">Follow / Following</span></b><span><span lang="fi">Seuraa kanavaa tai lopeta seuraaminen.</span><span lang="en">Follow the channel or unfollow it.</span></span></div></div>
+      </div>
+      <div class="keys">
+        <h4><span lang="fi">Sivupalkki ja kanavarivi</span><span lang="en">Sidebar and channel row</span></h4>
+        <div class="key"><span class="kico"><i data-i="compass" class="sm"></i></span><div><b><span lang="fi">Löydä</span><span lang="en">Discover</span></b><span><span lang="fi">Etsi uusia striimaajia pelin, kielen ja katsojamäärän mukaan.</span><span lang="en">Find new streamers by game, language and viewer count.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="chevrons-left" class="sm"></i></span><div><b><span lang="fi">Pienennä</span><span lang="en">Collapse</span></b><span><span lang="fi">Pienentää kanavalistan pelkiksi kuviksi.</span><span lang="en">Shrinks the channel list to just avatars.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="search" class="sm"></i></span><div><b><span lang="fi">Haku</span><span lang="en">Search</span></b><span><span lang="fi">Hakee seuratuista ja koko Twitchistä. Nuolet + Enter avaa.</span><span lang="en">Searches your follows and all of Twitch. Arrows + Enter opens.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="streak" class="sm"></i></span><div><b><span lang="fi">Liekki</span><span lang="en">Flame</span></b><span><span lang="fi">Katseluputki: avaa striimin itse taustalle, kun kanava menee liveen.</span><span lang="en">Watch streak: opens the stream in the background when the channel goes live.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="bell" class="sm"></i></span><div><b><span lang="fi">Kello</span><span lang="en">Bell</span></b><span><span lang="fi">Ilmoitus, kun kanava menee liveen.</span><span lang="en">A pop-up when the channel goes live.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="ellipsis" class="sm"></i></span><div><b><span lang="fi">⋯</span><span lang="en">⋯</span></b><span><span lang="fi">Kanavan oma ilmoitusääni, testi-ilmoitus ja (lisätylle kanavalle) poisto.</span><span lang="en">Per-channel notification sound, test pop-up and (for added channels) remove.</span></span></div></div>
+        <div class="key"><span class="kico"><i data-i="settings" class="sm"></i></span><div><b><span lang="fi">Asetukset</span><span lang="en">Settings</span></b><span><span lang="fi">Kaikki asetukset osioittain.</span><span lang="en">All settings, section by section.</span></span></div></div>
+      </div>
+    </div>
+
+    <div class="menus reveal">
+      <h4><span lang="fi">Yläpalkin valikot</span><span lang="en">Top bar menus</span></h4>
+      <p class="muted"><span lang="fi">Valikot avautuvat yläpalkin päälle, joten video pysyy näkyvissä. Sulje rivi ✕:stä tai Esc-näppäimellä.</span><span lang="en">The menus open over the top bar so the video stays visible. Close a row with ✕ or the Esc key.</span></p>
+      <figure class="bar-row">
+        <div class="crop-shot"><img data-src-fi="img/fi-chatbar.webp?v=10" data-src-en="img/en-chatbar.webp?v=10" src="img/fi-chatbar.webp?v=10" width="1320" height="53" loading="lazy" data-alt-fi="Chat-valikko: piilota, paikka, multistreamin chatit ja emojit" data-alt-en="Chat menu: hide, position, multistream chats and emotes" alt=""></div>
+        <figcaption><span lang="fi"><b>Chat ▾</b> – piilota tai näytä chat, vaihda paikka, multistreamissa chatit välilehdille tai rinnakkain, BTTV- ja 7TV-emojit sekä <b>Lisäasetukset</b>.</span><span lang="en"><b>Chat ▾</b> – hide or show the chat, change its position, in multistream chats as tabs or side by side, BTTV and 7TV emotes and <b>More settings</b>.</span></figcaption>
+      </figure>
+      <figure class="bar-row">
+        <div class="crop-shot"><img data-src-fi="img/fi-msbar.webp?v=10" data-src-en="img/en-msbar.webp?v=10" src="img/fi-msbar.webp?v=10" width="1320" height="53" loading="lazy" data-alt-fi="Multistream-valikko" data-alt-en="Multistream menu" alt=""></div>
+        <figcaption><span lang="fi"><b>Multistream ▾</b> – asettelu, paikkojen vaihto ja kummankin striimin sulkeminen.</span><span lang="en"><b>Multistream ▾</b> – layout, swap places and closing either stream.</span></figcaption>
+      </figure>
+      <figure class="bar-row">
+        <div class="crop-shot"><img data-src-fi="img/fi-more.webp?v=10" data-src-en="img/en-more.webp?v=10" src="img/fi-more.webp?v=10" width="1320" height="53" loading="lazy" data-alt-fi="Lisää-valikko: päivitä striimi ja irrota" data-alt-en="More menu: reload stream and pop out" alt=""></div>
+        <figcaption><span lang="fi"><b>⋯ Lisää</b> – päivitä striimi, irrota omaan ikkunaan ja Mod View (moderoimillasi kanavilla).</span><span lang="en"><b>⋯ More</b> – reload stream, pop out to a window and Mod View (on channels you moderate).</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="faq guide reveal">
+      <details id="opas-kanavat">
+        <summary><span lang="fi">Kanavalista ja haku</span><span lang="en">Channel list and search</span></summary>
+        <ul>
+          <li><span lang="fi">Sivupalkissa ovat kaikki seuraamasi kanavat: <b>Livenä</b> ylhäällä katsojamäärän mukaan, sitten <b>Offline</b> (taitettavissa kokoon otsikosta).</span><span lang="en">The sidebar has all channels you follow: <b>Live</b> at the top by viewer count, then <b>Offline</b> (foldable from its heading).</span></li>
+          <li><span lang="fi">Suodattimet: <b>Kaikki</b>, <b>Livenä</b> ja <b>Ilmoitukset</b> (vain kanavat, joilla kello on päällä).</span><span lang="en">Filters: <b>All</b>, <b>Live</b> and <b>Notifications</b> (only channels with the bell on).</span></li>
+          <li><span lang="fi">Haku näyttää ensin seuratut ja niiden alla muut Twitch-kanavat. Klikkaus avaa striimin, <b>+</b> lisää kanavan listaasi seuraamatta sitä.</span><span lang="en">Search shows your follows first and other Twitch channels below. Click opens the stream, <b>+</b> adds the channel to your list without following it.</span></li>
+          <li><span lang="fi"><b>Nuolinäppäimet</b> ja <b>Enter</b> toimivat haussa, <b>Esc</b> tyhjentää.</span><span lang="en"><b>Arrow keys</b> and <b>Enter</b> work in search, <b>Esc</b> clears it.</span></li>
+        </ul>
+      </details>
+      <details id="opas-valilehdet">
+        <summary><span lang="fi">Välilehdet</span><span lang="en">Tabs</span></summary>
+        <ul>
+          <li><span lang="fi">Jokainen avattu kanava tulee omalle välilehdelleen, oletuksena enintään 10 striimiä. Rajan voi poistaa: Asetukset → Katselu → Ei välilehtirajaa (jokainen striimi vie muistia ja näytönohjaimen tehoa).</span><span lang="en">Every channel you open gets its own tab, up to 10 streams by default. You can remove the limit: Settings → Viewing → No tab limit (every stream uses memory and GPU power).</span></li>
+          <li><span lang="fi"><b>Raahaa</b> välilehteä vaihtaaksesi järjestystä.</span><span lang="en"><b>Drag</b> a tab to reorder.</span></li>
+          <li><span lang="fi">Sulje ✕-napista tai <b>hiiren keskinapilla</b>.</span><span lang="en">Close with ✕ or the <b>middle mouse button</b>.</span></li>
+          <li><span lang="fi">Taustavälilehdet jatkavat mykistettyinä matalalla laadulla, joten katseluaika ja pisteet kertyvät.</span><span lang="en">Background tabs keep playing muted at low quality, so watch time and points keep growing.</span></li>
+          <li><span lang="fi">Offline-kanavan välilehdellä näkyy Chillyn oma kanavasivu: klipit, seuraajat, viimeisin live. Kun kanava menee liveen, striimi alkaa itsestään.</span><span lang="en">An offline channel's tab shows Chilly's own channel page: clips, followers, last live. When the channel goes live, the stream starts by itself.</span></li>
+        </ul>
+      </details>
+      <details id="opas-multi">
+        <summary><span lang="fi">Multistream</span><span lang="en">Multistream</span></summary>
+        <ul>
+          <li><span lang="fi">Paina yläpalkin <b>+</b> ja valitse toinen striimaaja (seuratut livenä tai haku).</span><span lang="en">Press <b>+</b> in the top bar and pick a second streamer (live follows or search).</span></li>
+          <li><span lang="fi"><b>Multistream ▾</b> avaa säätimet yläpalkkiin: asettelu (rinnakkain / iso + pieni / allekkain), <b>Vaihda paikkoja</b> ja kummankin sulkeminen. Chatit välilehdille tai molemmat näkyviin valitaan <b>Chat ▾</b> -valikosta. Sulje rivi ✕:stä tai Esc:llä.</span><span lang="en"><b>Multistream ▾</b> opens the controls in the top bar: layout (side by side / big + small / stacked), <b>Swap places</b> and closing either stream. Chats as tabs or both visible are chosen in the <b>Chat ▾</b> menu. Close the row with ✕ or Esc.</span></li>
+          <li><span lang="fi"><b>Ääni</b>: yläpalkin kuvakkeista valitset, kumman ääni kuuluu, tai aaltoikonista molempien. Molemmat-tilassa kummankin videon kulmassa on oma mykistysnappi.</span><span lang="en"><b>Audio</b>: the avatars in the top bar choose whose audio you hear, the wave icon plays both. In both-mode each video has its own mute button in the corner.</span></li>
+          <li><span lang="fi">Vie hiiri striimin päälle: kulmaan tulee <b>✕</b>, joka sulkee vain sen striimin. Napit häviävät, kun hiiri on paikallaan pari sekuntia.</span><span lang="en">Hover a stream: a <b>✕</b> appears in its corner and closes just that stream. The buttons fade when the mouse rests for a couple of seconds.</span></li>
+          <li><span lang="fi">Kun toinen striimaaja <b>raidaa</b>, sen paikka seuraa raidia. Jos se vain <b>lopettaa</b>, striimi sulkeutuu noin 1,5 minuutin päästä ja toinen täyttää tilan.</span><span lang="en">When one streamer <b>raids</b>, their slot follows the raid. If they just <b>end</b>, the stream closes after about 1.5 minutes and the other fills the space.</span></li>
+          <li><span lang="fi">Seuraa, Tilaa ja Klippaa koskevat sitä striimiä, jonka ääni kuuluu.</span><span lang="en">Follow, Subscribe and Clip act on the stream whose audio you hear.</span></li>
+        </ul>
+      </details>
+      <details id="opas-chat">
+        <summary><span lang="fi">Chat</span><span lang="en">Chat</span></summary>
+        <ul>
+          <li><span lang="fi">Chat on Twitchin oma, ja siinä on FrankerFaceZ sekä BTTV- ja 7TV-emojit (kytkettävissä: Asetukset → Chat).</span><span lang="en">The chat is Twitch's own with FrankerFaceZ plus BTTV and 7TV emotes (toggle in Settings → Chat).</span></li>
+          <li><span lang="fi"><b>Chat ▾</b> yläpalkissa: piilota tai näytä chat, paikka vasemmalla, oikealla tai videon alla (myös Asetukset → Katselu) ja BTTV/7TV-emojit. Kanavalista siirtyy aina vastakkaiselle puolelle.</span><span lang="en"><b>Chat ▾</b> in the top bar: hide or show the chat, position left, right or below the video (also Settings → Viewing) and BTTV/7TV emotes. The channel list always moves to the opposite side.</span></li>
+          <li><span lang="fi"><b>Täydennys</b>: kirjoita emojin alku ja paina <b>Tab</b> – Chilly täydentää myös BTTV- ja 7TV-emojit. Kaksoispisteellä (<b>:</b>) aukeaa lista, ja nimet täydentyvät <b>@</b>-merkillä. Täydennyksen ja kaikki muut chatin lisäasetukset (FrankerFaceZ) saat auki <b>Chat ▾ → Lisäasetukset</b> tai Asetukset → Chat.</span><span lang="en"><b>Completion</b>: type the start of an emote and press <b>Tab</b> – BTTV and 7TV emotes complete too. A colon (<b>:</b>) opens a list, and names complete with <b>@</b>. Completion and all other extra chat settings (FrankerFaceZ) open from <b>Chat ▾ → More settings</b> or Settings → Chat.</span></li>
+          <li><span lang="fi"><b>Koko</b>: raahaa videon ja chatin välistä rajaa. Chilly muistaa koon.</span><span lang="en"><b>Size</b>: drag the border between the video and chat. Chilly remembers it.</span></li>
+          <li><span lang="fi">Chatin linkit avautuvat tavalliseen selaimeesi – Twitch-kanavien linkit suoraan Chillyn välilehdelle.</span><span lang="en">Chat links open in your normal browser – links to Twitch channels open straight in a Chilly tab.</span></li>
+          <li><span lang="fi">Kirjoittaminen, kanavapisteet, äänestykset ja ennustukset vaativat twitch.tv-kirjautumisen Chillyssä (kysytään ensimmäisellä kerralla).</span><span lang="en">Typing, channel points, polls and predictions need the twitch.tv login inside Chilly (asked the first time).</span></li>
+        </ul>
+      </details>
+      <details id="opas-klipit">
+        <summary><span lang="fi">Klipit, seuraaminen ja tilaus</span><span lang="en">Clips, following and subscribing</span></summary>
+        <ul>
+          <li><span lang="fi"><b>Klippaa</b> avaa klippirivin: kirjoita otsikko (vapaaehtoinen), valitse 15/30/45/60 s ja paina <b>Tee klippi</b> tai Enter.</span><span lang="en"><b>Clip</b> opens the clip row: type a title (optional), pick 15/30/45/60 s and press <b>Create clip</b> or Enter.</span></li>
+          <li><span lang="fi">Ensimmäisellä kerralla Chilly voi pyytää uutta kirjautumista klippiluvan takia.</span><span lang="en">The first time, Chilly may ask you to log in again for the clip permission.</span></li>
+          <li><span lang="fi">Klipin voi tehdä vain, kun kanava on livenä.</span><span lang="en">You can only clip while the channel is live.</span></li>
+          <li><span lang="fi"><b>Seuraa</b> painaa Twitchin omaa seuraa-nappia puolestasi. Lopettaessa Chilly kysyy varmistuksen.</span><span lang="en"><b>Follow</b> presses Twitch's own follow button for you. Unfollowing asks for confirmation.</span></li>
+          <li><span lang="fi"><b>Tilaa</b> avaa Twitchin tilaussivun Chillyn ikkunaan – maksaminen tapahtuu Twitchissä.</span><span lang="en"><b>Subscribe</b> opens Twitch's subscribe page in a Chilly window – payment happens on Twitch.</span></li>
+        </ul>
+      </details>
+      <details id="opas-putki">
+        <summary><span lang="fi">Katseluputki (liekki)</span><span lang="en">Watch streak (flame)</span></summary>
+        <ul>
+          <li><span lang="fi">Laita liekki päälle kanavan rivillä. Kun kanava menee liveen, Chilly avaa striimin itse taustalle mykistettynä – myös ikkuna kiinni.</span><span lang="en">Turn on the flame on the channel's row. When the channel goes live, Chilly opens the stream itself, muted in the background – even with the window closed.</span></li>
+          <li><span lang="fi">Striimi sulkeutuu itsestään, kun lähetys on ollut poikki 3 minuuttia.</span><span lang="en">The stream closes by itself once the broadcast has been down for 3 minutes.</span></li>
+          <li><span lang="fi">Twitch laskee katsotuksi enintään 2 striimiä kerrallaan. <a href="#katseluputki">Lue lisää ↑</a></span><span lang="en">Twitch counts at most 2 streams at a time. <a href="#katseluputki">Read more ↑</a></span></li>
+        </ul>
+      </details>
+      <details id="opas-ilmoitukset">
+        <summary><span lang="fi">Ilmoitukset</span><span lang="en">Notifications</span></summary>
+        <ul>
+          <li><span lang="fi">Laita <b>kello</b> päälle kanaville, joista haluat ilmoituksen. Oletuksena kaikki ovat pois päältä.</span><span lang="en">Turn the <b>bell</b> on for the channels you want notifications from. By default they are all off.</span></li>
+          <li><span lang="fi">Ilmoitus tulee ruudun kulmaan Chillyn omana ikkunana – toimii, vaikka Windowsin ilmoitukset tai Älä häiritse olisivat päällä. Klikkaus avaa striimin.</span><span lang="en">The pop-up appears in the screen corner as Chilly's own window – it works even with Windows notifications or Do not disturb on. Clicking opens the stream.</span></li>
+          <li><span lang="fi">Ääni, kesto ja tarkistusväli: Asetukset → Ilmoitukset. Kanavalle oman äänen saa ⋯-valikosta.</span><span lang="en">Sound, duration and check interval: Settings → Notifications. A per-channel sound is in the ⋯ menu.</span></li>
+        </ul>
+      </details>
+      <details id="opas-lunastukset">
+        <summary><span lang="fi">Lunastukset ja Löydä</span><span lang="en">Auto-claim and Discover</span></summary>
+        <ul>
+          <li><span lang="fi"><b>Bonusarkut</b> lunastetaan automaattisesti avoimilla välilehdillä, <b>dropit</b> tarkistetaan 15 minuutin välein. Molemmat saa pois: Asetukset → Lunastukset.</span><span lang="en"><b>Bonus chests</b> are claimed automatically on open tabs, <b>drops</b> are checked every 15 minutes. Turn either off in Settings → Auto-claim.</span></li>
+          <li><span lang="fi"><b>Löydä</b> (kompassi): suosituimmat pelit, kategoriahaku, kieli, eniten / vähiten katsojia, "Vain livessä" ja "Ei seuratut".</span><span lang="en"><b>Discover</b> (compass): top games, category search, language, most / fewest viewers, "Live only" and "Not followed".</span></li>
+        </ul>
+      </details>
+      <details id="opas-ikkuna">
+        <summary><span lang="fi">Ikkuna, ilmoitusalue ja käynnistys</span><span lang="en">Window, tray and startup</span></summary>
+        <ul>
+          <li><span lang="fi">Ikkunan sulkeminen (✕) lopettaa striimit ja vie Chillyn <b>ilmoitusalueelle</b>, josta ilmoitukset tulevat edelleen. Katseluputken striimit jatkavat taustalla.</span><span lang="en">Closing the window (✕) stops the streams and moves Chilly to the <b>tray</b>, where notifications keep coming. Watch streak streams keep running in the background.</span></li>
+          <li><span lang="fi">Ilmoitusalueen kuvakkeen valikossa ovat livekanavat, <b>Avaa Chilly</b>, <b>Päivitä nyt</b> ja <b>Lopeta</b>.</span><span lang="en">The tray icon menu lists live channels plus <b>Open Chilly</b>, <b>Refresh now</b> and <b>Quit</b>.</span></li>
+          <li><span lang="fi"><b>Käynnistä Windowsin mukana</b> (Asetukset → Yleiset): Chilly käynnistyy piilossa ilmoitusalueelle.</span><span lang="en"><b>Start with Windows</b> (Settings → General): Chilly starts hidden in the tray.</span></li>
+          <li><span lang="fi"><b>⋯ → Irrota omaan ikkunaan</b> siirtää striimin omaan ikkunaansa (esim. toiselle näytölle), ja <b>Palauta tähän</b> tuo sen takaisin.</span><span lang="en"><b>⋯ → Pop out to a window</b> moves a stream into its own window (e.g. a second monitor), and <b>Bring back here</b> returns it.</span></li>
+        </ul>
+      </details>
+      <details id="opas-asetukset">
+        <summary><span lang="fi">Asetukset osio kerrallaan</span><span lang="en">Settings section by section</span></summary>
+        <ul>
+          <li><span lang="fi"><b>Yleiset</b>: kieli (suomi / englanti), käynnistys Windowsin mukana, päivitysten tarkistus.</span><span lang="en"><b>General</b>: language (Finnish / English), start with Windows, update check.</span></li>
+          <li><span lang="fi"><b>Ilmoitukset</b>: ääni ja testi, ilmoituksen kesto, kuinka usein livet tarkistetaan.</span><span lang="en"><b>Notifications</b>: sound and test, pop-up duration, how often live status is checked.</span></li>
+          <li><span lang="fi"><b>Katselu</b>: chatin paikka, äänenvahvistin, mainosesto (beta, oletuksena pois), välilehtiraja (oletuksena 10) ja laitekiihdytys.</span><span lang="en"><b>Viewing</b>: chat position, volume booster, ad blocking (beta, off by default), tab limit (10 by default) and hardware acceleration.</span></li>
+          <li><span lang="fi"><b>Multistream</b>: uuden multistreamin oletukset (ääni yhdestä / molemmista, chatit välilehdillä / rinnakkain).</span><span lang="en"><b>Multistream</b>: defaults for a new multistream (audio from one / both, chats as tabs / side by side).</span></li>
+          <li><span lang="fi"><b>Chat</b>: BTTV- ja 7TV-emojit sekä chatin lisäasetukset (FrankerFaceZ).</span><span lang="en"><b>Chat</b>: BTTV and 7TV emotes plus extra chat settings (FrankerFaceZ).</span></li>
+          <li><span lang="fi"><b>Lunastukset</b>: bonusarkut ja dropit. <b>Katseluputki</b>: liekitettyjen kanavien tärkeysjärjestys raahaamalla.</span><span lang="en"><b>Auto-claim</b>: bonus chests and drops. <b>Watch streak</b>: drag-to-reorder priority for flame channels.</span></li>
+          <li><span lang="fi"><b>Moderointi</b>: Mod View -nappi ja lista kanavista, joilla se näkyy.</span><span lang="en"><b>Moderation</b>: the Mod View button and the list of channels where it shows.</span></li>
+          <li><span lang="fi"><b>Tili</b>: kirjaudu ulos, twitch.tv-kirjautuminen. <b>Tietoja</b>: versio, kotisivu, lokikansio bugiraportteihin ja käytetyt osat.</span><span lang="en"><b>Account</b>: log out, twitch.tv login. <b>About</b>: version, website, log folder for bug reports and third-party parts.</span></li>
+        </ul>
+      </details>
+      <details id="opas-vianmaaritys">
+        <summary><span lang="fi">Jos jokin ei toimi</span><span lang="en">If something doesn't work</span></summary>
+        <ul>
+          <li><span lang="fi"><b>Striimi jumittaa tai on jäljessä</b>: paina <b>⋯ → Päivitä striimi</b>.</span><span lang="en"><b>Stream stutters or lags behind</b>: press <b>⋯ → Reload stream</b>.</span></li>
+          <li><span lang="fi"><b>Kuva musta tai välkkyy</b>: kytke Asetukset → Katselu → Laitekiihdytys pois ja käynnistä Chilly uudelleen.</span><span lang="en"><b>Picture black or flickering</b>: turn off Settings → Viewing → Hardware acceleration and restart Chilly.</span></li>
+          <li><span lang="fi"><b>Ääntä ei kuulu</b>: tarkista välilehden mykistys (punainen kaiutin), multistreamin äänivalinta ja Twitch-soittimen oma äänenvoimakkuus.</span><span lang="en"><b>No sound</b>: check the tab mute (red speaker), the multistream audio choice and the Twitch player's own volume.</span></li>
+          <li><span lang="fi"><b>Chattiin ei voi kirjoittaa / pisteitä ei näy</b>: kirjaudu twitch.tv:hen Chillyssä (Asetukset → Tili).</span><span lang="en"><b>Can't type in chat / no points</b>: log in to twitch.tv inside Chilly (Settings → Account).</span></li>
+          <li><span lang="fi"><b>Mainosesto päällä ja striimi jumittaa</b>: kytke mainosesto pois.</span><span lang="en"><b>Ad blocking on and the stream stutters</b>: turn ad blocking off.</span></li>
+          <li><span lang="fi">Ei auttanut? <a href="https://discord.gg/5qBGnbjMdg" target="_blank" rel="noopener">Kerro Discordissa</a> – liitä mukaan versionumero (Asetukset → Tietoja).</span><span lang="en">Didn't help? <a href="https://discord.gg/5qBGnbjMdg" target="_blank" rel="noopener">Tell us on Discord</a> – include the version number (Settings → About).</span></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ASENNUS ================= -->
+<section id="asennus" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="download" class="sm"></i><span lang="fi">Asennus</span><span lang="en">Install</span></span>
+      <h2><span lang="fi">Käytössä parissa minuutissa</span><span lang="en">Up and running in a couple of minutes</span></h2>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <h3><span lang="fi">Lataa</span><span lang="en">Download</span></h3>
+        <p><span lang="fi">Lataa asennusohjelma alta ja avaa se.</span><span lang="en">Download the installer below and open it.</span></p>
+      </div>
+      <div class="step">
+        <h3><span lang="fi">Ohita SmartScreen</span><span lang="en">Get past SmartScreen</span></h3>
+        <p><span lang="fi">Windows sanoo "Windows suojasi tietokonettasi". Paina <b>Lisätietoja → Suorita joka tapauksessa</b>. <a href="#smartscreen">Katso kuvat ↓</a></span><span lang="en">Windows says "Windows protected your PC". Click <b>More info → Run anyway</b>. <a href="#smartscreen">See pictures ↓</a></span></p>
+      </div>
+      <div class="step">
+        <h3><span lang="fi">Valitse kieli</span><span lang="en">Pick a language</span></h3>
+        <p><span lang="fi">Asennus kysyy kielen (suomi tai englanti). Sen voi vaihtaa myöhemmin asetuksista.</span><span lang="en">The installer asks for a language (Finnish or English). You can change it later in settings.</span></p>
+      </div>
+      <div class="step">
+        <h3><span lang="fi">Kirjaudu Twitchillä</span><span lang="en">Log in with Twitch</span></h3>
+        <p><span lang="fi">Kirjautuminen tapahtuu Twitchin omalla sivulla Chillyn sisällä. Salasanasi ei koskaan kulje Chillyn kautta. <a href="#kirjautuminen">Katso kuvat ↓</a></span><span lang="en">You log in on Twitch's own page inside Chilly. Your password never goes through Chilly. <a href="#kirjautuminen">See pictures ↓</a></span></p>
+      </div>
+    </div>
+
+
+    <!-- SmartScreen-ohje -->
+    <div class="ss reveal" id="smartscreen">
+      <div class="ss-text">
+        <span class="kick" style="color:var(--warn)"><i data-i="triangle-alert" class="sm"></i><span lang="fi">Tämä tulee varmasti vastaan</span><span lang="en">You will see this</span></span>
+        <h3><span lang="fi">"Windows suojasi tietokonettasi" – mitä teen?</span><span lang="en">"Windows protected your PC" – what do I do?</span></h3>
+        <ol class="ss-steps">
+          <li><span lang="fi">Paina tekstiä <b>Lisätietoja</b>.</span><span lang="en">Click <b>More info</b>.</span></li>
+          <li><span lang="fi">Paina <b>Suorita joka tapauksessa</b>. Asennus jatkuu normaalisti.</span><span lang="en">Click <b>Run anyway</b>. The installation continues normally.</span></li>
+        </ol>
+        <h4><span lang="fi">Miksi varoitus tulee?</span><span lang="en">Why does the warning appear?</span></h4>
+        <p><span lang="fi">Windows varoittaa jokaisesta uudesta ohjelmasta, jolla ei ole "tunnettu julkaisija" -merkintää. Merkintä vaatii koodinallekirjoitusvarmenteen, joka maksaa satoja euroja vuodessa – pienelle ilmaiselle harrasteprojektille se ei ole järkevää. Siksi kohdassa <i>Julkaisija</i> lukee "Tuntematon julkaisija".</span><span lang="en">Windows warns about every new program that doesn't have a "known publisher" mark. That mark requires a code signing certificate that costs hundreds of euros a year – not sensible for a small free hobby project. That's why <i>Publisher</i> says "Unknown publisher".</span></p>
+        <p><span lang="fi">Varoitus <b>ei tarkoita, että Chillyssä olisi vikaa tai virusta</b>. Lataa Chilly kuitenkin aina vain tältä sivulta (samppalandia.wtf/chilly), niin tiedät saavasi oikean tiedoston.</span><span lang="en">The warning <b>doesn't mean Chilly is broken or contains a virus</b>. Always download Chilly only from this page (samppalandia.wtf/chilly) so you know you're getting the real file.</span></p>
+      </div>
+      <div class="ss-shots">
+        <figure>
+          <div class="pic">
+            <img src="img/smartscreen-1.webp?v=10" width="534" height="500" loading="lazy" data-alt-fi="SmartScreen-varoitus: paina Lisätietoja" data-alt-en="SmartScreen warning: click More info" alt="">
+            <span class="mark m1" aria-hidden="true"></span>
+          </div>
+          <figcaption><b>1.</b> <span lang="fi">Lisätietoja</span><span lang="en">More info</span></figcaption>
+        </figure>
+        <figure>
+          <div class="pic">
+            <img src="img/smartscreen-2.webp?v=10" width="534" height="500" loading="lazy" data-alt-fi="SmartScreen: paina Suorita joka tapauksessa" data-alt-en="SmartScreen: click Run anyway" alt="">
+            <span class="mark m2" aria-hidden="true"></span>
+          </div>
+          <figcaption><b>2.</b> <span lang="fi">Suorita joka tapauksessa</span><span lang="en">Run anyway</span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+
+    <!-- Kirjautumisohje -->
+    <div class="login-guide reveal" id="kirjautuminen">
+      <span class="kick"><i data-i="log-in" class="sm"></i><span lang="fi">Kirjautuminen</span><span lang="en">Logging in</span></span>
+      <h3><span lang="fi">Näin kirjaudut Chillyyn</span><span lang="en">How to log in to Chilly</span></h3>
+      <div class="lg-steps">
+        <figure>
+          <div class="lg-pic"><img data-src-fi="img/chilly-login-fi.webp?v=10" data-src-en="img/chilly-login-en.webp?v=10" src="img/chilly-login-fi.webp?v=10" width="515" height="730" loading="lazy" data-alt-fi="Chillyn kirjautumisruutu ja koodi" data-alt-en="Chilly's login screen with the code" alt=""></div>
+          <figcaption><b>1.</b> <span lang="fi">Paina Chillyssä <b>Kirjaudu Twitchillä</b>. Chilly näyttää koodin ja avaa Twitchin kirjautumisikkunan.</span><span lang="en">In Chilly, click <b>Log in with Twitch</b>. Chilly shows a code and opens Twitch's login window.</span></figcaption>
+        </figure>
+        <figure>
+          <div class="lg-pic"><img data-src-fi="img/twitch-login-fi.webp?v=10" data-src-en="img/twitch-login-en.webp?v=10" src="img/twitch-login-fi.webp?v=10" width="650" height="610" loading="lazy" data-alt-fi="Twitchin oma kirjautumissivu" data-alt-en="Twitch's own login page" alt=""></div>
+          <figcaption><b>2.</b> <span lang="fi">Kirjaudu <b>Twitchin omalla sivulla</b> tavallisilla Twitch-tunnuksillasi. Salasana menee suoraan Twitchille, ei Chillylle.</span><span lang="en">Log in on <b>Twitch's own page</b> with your normal Twitch account. Your password goes straight to Twitch, not to Chilly.</span></figcaption>
+        </figure>
+        <figure>
+          <div class="lg-pic"><img data-src-fi="img/twitch-activate-fi.webp?v=10" data-src-en="img/twitch-activate-en.webp?v=10" src="img/twitch-activate-fi.webp?v=10" width="641" height="232" loading="lazy" data-alt-fi="Twitchin aktivointisivu, koodi valmiina" data-alt-en="Twitch's activation page with the code filled in" alt=""></div>
+          <figcaption><b>3.</b> <span lang="fi">Twitch näyttää saman koodin kuin Chilly. Tarkista, että ne täsmäävät, ja paina <b>Aktivoi</b>. Valmista – Chilly kirjautuu itsestään.</span><span lang="en">Twitch shows the same code as Chilly. Check that they match and click <b>Activate</b>. Done – Chilly logs in by itself.</span></figcaption>
+        </figure>
+      </div>
+      <p class="lg-note"><span lang="fi">Kuvien koodi (CHILLY42) on esimerkki – sinulla näkyy oma koodisi. Kuvissa ei ole kenenkään tunnuksia.</span><span lang="en">The code in the pictures (CHILLY42) is an example – you'll see your own code. The pictures don't show anyone's account details.</span></p>
+    </div>
+
+    <div class="callout reveal">
+      <i data-i="refresh-ccw"></i>
+      <div><span lang="fi"><b>Päivittäminen:</b> versiosta 0.1.9 alkaen Chilly päivittää itsensä – kun uusi versio tulee, ruudun kulmaan tulee ilmoitus ja Päivitä-napista se asentuu itsestään (asetukset säilyvät). Vanhemmat versiot päivitetään vielä kerran käsin: lataa uusi versio ja aja asennusohjelma.</span><span lang="en"><b>Updating:</b> from version 0.1.9 on, Chilly updates itself – when a new version comes out, a pop-up appears in the corner and the Update button installs it (your settings are kept). Older versions need one manual update: download the new version and run the installer.</span></div>
+    </div>
+
+    <div class="reqs reveal">
+      <span class="chip"><i data-i="monitor" class="sm"></i>Windows 10 / 11 (64-bit)</span>
+      <span class="chip"><i data-i="log-in" class="sm"></i><span lang="fi">Twitch-tili</span><span lang="en">Twitch account</span></span>
+      <span class="chip"><i data-i="zap" class="sm"></i><span lang="fi">Microsoft Edge WebView2 (Windows 11:ssä valmiina)</span><span lang="en">Microsoft Edge WebView2 (built into Windows 11)</span></span>
+    </div>
+
+    <div class="dl-box reveal">
+      <div>
+        <b>Chilly 0.2.4 <span style="color:var(--warn)">beta</span></b>
+        <div class="muted">Chilly_0.2.4_x64-setup.exe · 4,3 Mt · Windows 10 / 11</div>
+        <div class="muted" style="margin-top:4px"><span lang="fi">SmartScreen-varoitus? <a href="#smartscreen">Lisätietoja → Suorita joka tapauksessa</a></span><span lang="en">SmartScreen warning? <a href="#smartscreen">More info → Run anyway</a></span></div>
+      </div>
+      <a class="btn primary" href="Chilly_0.2.4_x64-setup.exe" download><i data-i="download"></i><span lang="fi">Lataa Chilly</span><span lang="en">Download Chilly</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UKK ================= -->
+<section id="ukk">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="message-circle-question" class="sm"></i><span lang="fi">UKK</span><span lang="en">FAQ</span></span>
+      <h2><span lang="fi">Usein kysyttyä</span><span lang="en">Frequently asked</span></h2>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary><span lang="fi">Maksaako Chilly jotain?</span><span lang="en">Does Chilly cost anything?</span></summary>
+        <p><span lang="fi">Ei. Chilly on ilmainen.</span><span lang="en">No. Chilly is free.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Onko kirjautuminen turvallista?</span><span lang="en">Is logging in safe?</span></summary>
+        <p><span lang="fi">Kyllä. Kirjaudut Twitchin omalla kirjautumissivulla, eikä salasanasi kulje Chillyn kautta. Kirjautumistiedot tallentuvat vain omalle koneellesi.</span><span lang="en">Yes. You log in on Twitch's own login page and your password never goes through Chilly. Your login is stored only on your own PC.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Miksi Windows varoittaa asennuksesta?</span><span lang="en">Why does Windows warn about the installer?</span></summary>
+        <p><span lang="fi">Chilly on pieni harrasteprojekti, eikä asennusohjelmaa ole allekirjoitettu maksullisella varmenteella. Siksi Windows SmartScreen näyttää varoituksen. Paina "Lisätietoja" ja sitten "Suorita joka tapauksessa". <a href="#smartscreen">Katso kuvat</a>.</span><span lang="en">Chilly is a small hobby project and the installer isn't signed with a paid certificate, so Windows SmartScreen shows a warning. Click "More info" and then "Run anyway". <a href="#smartscreen">See pictures</a>.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Lasketaanko minut katsojaksi, jos mykistän striimin?</span><span lang="en">Am I counted as a viewer if I mute a stream?</span></summary>
+        <p><span lang="fi">Kyllä. Chilly mykistää äänen ohjelman tasolla, eikä Twitch huomaa sitä, joten katselu ja kanavapisteet kertyvät normaalisti.</span><span lang="en">Yes. Chilly mutes at the app level and Twitch doesn't notice, so watch time and channel points keep counting normally.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Miksi en saa ilmoituksia?</span><span lang="en">Why am I not getting notifications?</span></summary>
+        <p><span lang="fi">Kanavakohtaiset ilmoitukset ovat oletuksena pois päältä. Laita kellosymboli päälle niille kanaville, joista haluat ilmoituksen. Chilly näyttää omat ilmoituksensa, joten Windowsin ilmoitusasetukset eivät vaikuta.</span><span lang="en">Per-channel notifications are off by default. Turn the bell on for the channels you want. Chilly shows its own pop-ups, so Windows notification settings don't matter.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Paljonko Chilly kuormittaa konetta?</span><span lang="en">How heavy is Chilly?</span></summary>
+        <p><span lang="fi">Yksi striimi vie noin 1–2 % prosessoria, koska näytönohjain purkaa videon. Muistia kuluu noin 1 Gt per striimi, josta suurin osa on Twitchin omaa soitinta – saman verran kuin selaimessa.</span><span lang="en">One stream uses about 1–2 % CPU because the graphics card decodes the video. Memory is about 1 GB per stream, mostly Twitch's own player – the same as in a browser.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Kuva on musta tai välkkyy. Mitä teen?</span><span lang="en">The picture is black or flickers. What do I do?</span></summary>
+        <p><span lang="fi">Kokeile ensin ⋯-valikon Päivitä striimi -toimintoa. Jos ongelma jatkuu, kytke Asetukset → Katselu → Laitekiihdytys pois ja käynnistä Chilly uudelleen. Kerro vika myös Discordissa.</span><span lang="en">First try Reload stream in the ⋯ menu. If it keeps happening, turn off Settings → Viewing → Hardware acceleration and restart Chilly. Please report it on Discord too.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Toimiiko Chilly Macilla tai puhelimella?</span><span lang="en">Does Chilly work on Mac or phones?</span></summary>
+        <p><span lang="fi">Ei, Chilly on tehty Windows 10:lle ja 11:lle.</span><span lang="en">No, Chilly is made for Windows 10 and 11.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Onko Chilly Twitchin virallinen sovellus?</span><span lang="en">Is Chilly an official Twitch app?</span></summary>
+        <p><span lang="fi">Ei. Chilly on SamppaLandian harrasteprojekti, eikä se liity Twitchiin. Se käyttää Twitchin virallista rajapintaa ja Twitchin omaa soitinta ja chattia.</span><span lang="en">No. Chilly is a SamppaLandia hobby project and isn't affiliated with Twitch. It uses Twitch's official API and Twitch's own player and chat.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Miten Chilly päivitetään?</span><span lang="en">How do I update Chilly?</span></summary>
+        <p><span lang="fi">Versiosta 0.1.9 alkaen Chilly tarkistaa päivitykset itse käynnistyessä ja kerran päivässä. Kun uusi versio on saatavilla, saat ilmoituksen – paina Päivitä, niin Chilly lataa, tarkistaa ja asentaa sen ja käynnistyy uudelleen. Voit myös tarkistaa itse: Asetukset → Yleiset → Tarkista päivitykset. Päivitys tarkistetaan digitaalisella allekirjoituksella, joten vain aito Chilly asentuu.</span><span lang="en">From version 0.1.9 on, Chilly checks for updates on startup and once a day. When a new version is available you get a pop-up – click Update and Chilly downloads, verifies and installs it, then restarts. You can also check yourself: Settings → General → Check for updates. Updates are verified with a digital signature, so only genuine Chilly gets installed.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Estääkö Chilly mainokset?</span><span lang="en">Does Chilly block ads?</span></summary>
+        <p><span lang="fi">Kyllä, versiosta 0.2.0 alkaen. Kytke päälle: Asetukset → Katselu → Mainosesto (beta). Esto poistaa videomainokset ja kuva kuvassa -mainokset, ja katseluaika kertyy normaalisti. <a href="#mainosesto">Katso testitulokset ↑</a></span><span lang="en">Yes, from version 0.2.0. Turn it on: Settings → Viewing → Ad blocking (beta). It removes video ads and picture-in-picture ads, and watch time keeps counting normally. <a href="#mainosesto">See the test results ↑</a></span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Miksi Mod View -nappi ei näy?</span><span lang="en">Why don't I see the Mod View button?</span></summary>
+        <p><span lang="fi">Kytke se päälle: Asetukset → Moderointi → Mod View -nappi. Mod View löytyy yläpalkin <b>⋯</b>-valikosta, ja se näkyy vain omalla kanavallasi ja kanavilla, joilla olet moderaattori. Jos asetuksissa lukee "Lupa tarvitaan", paina <b>Kirjaudu uudelleen</b> ja hyväksy lupa – se tarvitaan vain kerran.</span><span lang="en">Turn it on: Settings → Moderation → Mod View button. Mod View is in the top bar's <b>⋯</b> menu and only shows on your own channel and channels you moderate. If settings say "Permission needed", click <b>Log in again</b> and accept – you only need to do this once.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Liekki on päällä usealla kanavalla – miksi putki ei kerry kaikille?</span><span lang="en">The flame is on for several channels – why doesn't the streak grow on all?</span></summary>
+        <p><span lang="fi">Twitch laskee katsotuksi enintään 2 striimiä kerrallaan. Siksi Katseluputki pitää auki enintään 2 live-striimiä kerrallaan (mukaan lukien itse katsomasi) ja tekee tilaa sulkemalla ensin taustan raidivieraat. Voit järjestää liekitetyt kanavat tärkeysjärjestykseen raahaamalla kohdassa Asetukset → Katseluputki.</span><span lang="en">Twitch counts at most 2 streams at a time. That's why Watch streak keeps at most 2 live streams open at once (including ones you're watching) and makes room by closing background raid guests first. You can drag your flame channels into priority order in Settings → Watch streak.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Striimi on liian hiljainen. Mitä teen?</span><span lang="en">A stream is too quiet. What do I do?</span></summary>
+        <p><span lang="fi">Käytä äänenvahvistinta: yläpalkin prosenttinappi (esim. 100%) vaihtaa 100 → 150 → 200 → 300 %. Sama säätö löytyy kohdasta Asetukset → Katselu. Vahvistus koskee kaikkia striimejä.</span><span lang="en">Use the volume booster: the percentage button in the top bar (e.g. 100%) cycles 100 → 150 → 200 → 300 %. The same setting is in Settings → Viewing. The boost applies to all streams.</span></p>
+      </details>
+      <details>
+        <summary><span lang="fi">Miten poistan Chillyn?</span><span lang="en">How do I uninstall Chilly?</span></summary>
+        <p><span lang="fi">Windowsin Asetukset → Sovellukset → Asennetut sovellukset → Chilly → Poista asennus.</span><span lang="en">Windows Settings → Apps → Installed apps → Chilly → Uninstall.</span></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MUUTOSLOKI ================= -->
+<section id="muutokset" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kick"><i data-i="history" class="sm"></i><span lang="fi">Muutosloki</span><span lang="en">Changelog</span></span>
+      <h2><span lang="fi">Mitä uutta</span><span lang="en">What's new</span></h2>
+    </div>
+    <div class="log reveal">
+      <div class="row"><div class="v">0.2.4</div><ul>
+        <li><span lang="fi"><b>Päivitys ja äänet korjattu:</b> Chilly sulkee nyt kaikki striimit ja chatit puhtaasti ennen päivityksen asennusta (ei enää taustalle jääviä tai tuplaääniä), ja piilotettu ikkuna trayssa on aina mykistetty.</span><span lang="en"><b>Update & audio fixes:</b> Chilly now cleanly closes all streams and chats before installing an update (no more lingering or double audio), and a hidden tray window is always muted.</span></li>
+        <li><span lang="fi"><b>Vähemmän vääriä Defender-hälytyksiä:</b> käännösasetuksia ja Windows-metatietoja siistitty (virallinen SignPath-koodinallekirjoitus työn alla).</span><span lang="en"><b>Fewer Defender false positives:</b> adjusted release build flags and Windows executable metadata (official SignPath code signing in progress).</span></li>
+        <li><span lang="fi"><b>Avoin lähdekoodi:</b> Chilly julkaistaan avoimena lähdekoodina MIT-lisenssillä GitHubissa.</span><span lang="en"><b>Open source:</b> Chilly is now open source under the MIT license on GitHub.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.2.3</div><ul>
+        <li><span lang="fi"><b>Katseluputken tärkeysjärjestys raahaamalla:</b> järjestä liekitetyt kanavat kohdassa Asetukset → Katseluputki. Kiintiö pitää auki enintään 2 live-striimiä (mukaan lukien itse katsomasi).</span><span lang="en"><b>Drag-to-reorder Watch streak priority:</b> sort your flame channels in Settings → Watch streak. Keeps at most 2 live streams open (including ones you're watching).</span></li>
+        <li><span lang="fi"><b>Raidivieraiden automaattinen siivous:</b> Katseluputken striimin raidatessa vieraalle kanavalle se saa pyöriä, mutta sulkeutuu kun tärkeämpi liekitetty tarvitsee paikan tai striimi lopettaa. Itse avaamisiasi tai klikkaamiasi striimejä ei suljeta koskaan.</span><span lang="en"><b>Automatic raid guest cleanup:</b> when a Watch streak stream raids an unflamed channel, it keeps playing until a higher-priority flame needs the slot or it ends. Streams you opened or clicked yourself are never closed.</span></li>
+        <li><span lang="fi"><b>Muistisäästö ja käyttömukavuus:</b> drops-tarkistus sulkee taustanäkymän heti tarkistuksen jälkeen, ikkunan koko ja sijainti muistetaan, 15 min tarkistusväli lisätty, ja Asetukset → Tietoja -osiosta saa auki lokikansion bugiraportteja varten.</span><span lang="en"><b>Memory savings & quality of life:</b> drops check closes its hidden view right after checking, window size and position are remembered, 15 min check interval added, and Settings → About now has an Open log folder button for bug reports.</span></li>
+        <li><span lang="fi"><b>Bugikorjaukset:</b> korjattu multistreamin Iso + pieni (PiP) -paikanvaihto, vanhentuneen tokenin uusinta klippauksessa/seuraamisessa, chatin lisäasetusikkunan linkit, "Kunnes suljen" -ilmoituskesto klipeille/dropeille, päällekkäisten näkymien peitto, kaksoisvälilehti raidissa sekä FI/EN-käännöksiä.</span><span lang="en"><b>Bug fixes:</b> fixed multistream Big + small (PiP) swap layering, expired token refresh when clipping/following, links in the chat settings window, "Until I close it" duration for clip/drop pop-ups, overlay cover timing, duplicate tab on raid and FI/EN translations.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.2.2</div><ul>
+        <li><span lang="fi">Välilehtirajan voi poistaa: Asetukset → Katselu → Ei välilehtirajaa. Chilly varoittaa ensin, että moni striimi vie muistia ja näytönohjaimen tehoa.</span><span lang="en">The tab limit can be removed: Settings → Viewing → No tab limit. Chilly warns first that many streams use memory and GPU power.</span></li>
+        <li><span lang="fi">Striimin tiedoissa näkyy nyt myös, kuinka kauan striimi on ollut livenä.</span><span lang="en">Stream info now also shows how long the stream has been live.</span></li>
+        <li><span lang="fi">Chatin emojit täydentyvät Tabilla (myös BTTV ja 7TV), ja chatin lisäasetukset aukeavat Chat ▾ -valikosta.</span><span lang="en">Chat emotes complete with Tab (BTTV and 7TV too), and more chat settings open from the Chat ▾ menu.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.2.1</div><ul>
+        <li><span lang="fi">Korjattu: chatin linkit eivät auenneet. Nyt ne avautuvat selaimeesi, ja Twitch-kanavien linkit avautuvat suoraan Chillyn välilehdelle.</span><span lang="en">Fixed: chat links didn't open. Now they open in your browser, and links to Twitch channels open straight in a Chilly tab.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.2.0</div><ul>
+        <li><span lang="fi"><b>Mainosesto (beta):</b> Twitchin videomainokset ja kuva kuvassa -mainokset pois (Asetukset → Katselu, oletuksena pois).</span><span lang="en"><b>Ad blocking (beta):</b> Twitch video ads and picture-in-picture ads gone (Settings → Viewing, off by default).</span></li>
+        <li><span lang="fi">Uusi klippirivi: otsikko ja pituus 15–60 s suoraan yläpalkista. Ilmoituksessa Kopioi linkki ja Avaa.</span><span lang="en">New clip row: title and length of 15–60 s right from the top bar. The pop-up has Copy link and Open.</span></li>
+        <li><span lang="fi">Multistream: kaikki säädöt Multistream-napin takana, ✕ ja mykistys videon kulmassa hiiren alla, sulkeminen nostaa toisen striimin tilalle ja loppunut striimi sulkeutuu itsestään.</span><span lang="en">Multistream: all controls behind the Multistream button, ✕ and mute in the video corner on hover, closing one lets the other fill the space, and an ended stream closes by itself.</span></li>
+        <li><span lang="fi">Äänenvahvistin 150–300 % rajoittimella (asetuksissa ja yläpalkissa).</span><span lang="en">Volume booster 150–300 % with a limiter (in settings and the top bar).</span></li>
+        <li><span lang="fi">Mod View moderaattoreille (Asetukset → Moderointi, avataan ⋯-valikosta).</span><span lang="en">Mod View button for moderators (Settings → Moderation).</span></li>
+        <li><span lang="fi">Siistimpi yläpalkki: Chat ▾ (piilota, paikka, emojit) ja ⋯ Lisää (päivitä, irrota, Mod View) kokoavat napit.</span><span lang="en">Tidier top bar: Chat ▾ (hide, position, emotes) and ⋯ More (reload, pop out, Mod View) gather the buttons.</span></li>
+        <li><span lang="fi">Välilehtien järjestys raahaamalla.</span><span lang="en">Reorder tabs by dragging.</span></li>
+        <li><span lang="fi">Uusi kanavalista, kokoontaitettava Offline-osio ja asetukset selkeisiin osioihin.</span><span lang="en">New channel list, foldable Offline section and settings in clear sections.</span></li>
+        <li><span lang="fi">Uusi aloitusanimaatio: logo lentää paikalleen sivupalkkiin.</span><span lang="en">New startup animation: the logo flies into place in the sidebar.</span></li>
+        <li><span lang="fi">Taustavälilehdet pyörivät nyt oikeasti (katseluputki ja pisteet kertyvät) matalalla laadulla.</span><span lang="en">Background tabs now really play (watch streak and points grow) at low quality.</span></li>
+        <li><span lang="fi">Chatin linkit avautuvat selaimeen. Korjattu: raid-kortti leikkautui chatissa, ja raidin perässä siirtynyt välilehti saattoi sulkeutua itsestään.</span><span lang="en">Chat links open in your browser. Fixed: the raid card was cut off in chat, and a tab that followed a raid could close by itself.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.9</div><ul>
+        <li><span lang="fi">Päivitysten tarkistus: Chilly kertoo uudesta versiosta ja päivittyy itse Päivitä-napista (Asetukset → Tietoja → Tarkista päivitykset). Tämä versio asennetaan vielä kerran käsin.</span><span lang="en">Update check: Chilly tells you about a new version and updates itself with the Update button (Settings → About → Check for updates). This version still needs to be installed manually once.</span></li>
+        <li><span lang="fi">Korjattu: kanavalistan nimet katkesivat liian lyhyiksi.</span><span lang="en">Fixed: channel names in the list were cut too short.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.8</div><ul>
+        <li><span lang="fi">Uusi katseluputki: liekkinappi kanavalistassa avaa striimin itse taustalle mykistettynä, kun kanava menee liveen – myös ikkuna kiinni.</span><span lang="en">New watch streak: the flame button in the channel list opens the stream by itself, muted in the background, when the channel goes live – even with the window closed.</span></li>
+        <li><span lang="fi">Korjattu: raidissa selaimeen ei enää aukea erillistä chat-ikkunaa.</span><span lang="en">Fixed: raids no longer open a separate chat window in your browser.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.7</div><ul>
+        <li><span lang="fi">Multistreamin paikanvaihto on välitön – mikään ei lataudu uudelleen.</span><span lang="en">Multistream swap is instant – nothing reloads.</span></li>
+        <li><span lang="fi">Päivitä-nappi yläpalkkiin (multistreamissa päivittää molemmat).</span><span lang="en">Reload button in the top bar (reloads both in multistream).</span></li>
+        <li><span lang="fi">Viive näkyy tietopaneelissa (keltainen yli 10 s, punainen yli 30 s).</span><span lang="en">Delay shown in the info panel (yellow over 10 s, red over 30 s).</span></li>
+        <li><span lang="fi">Laitekiihdytyksen kytkin asetuksiin.</span><span lang="en">Hardware acceleration toggle in settings.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.6</div><ul>
+        <li><span lang="fi">Raidit: välilehti, chat ja napit siirtyvät uuteen kanavaan, myös multistreamissa.</span><span lang="en">Raids: tab, chat and buttons move to the new channel, in multistream too.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.5</div><ul>
+        <li><span lang="fi">Tietopaneeli: hiiri striimin päälle näyttää nimen, otsikon, pelin ja katsojat.</span><span lang="en">Info panel: hovering a stream shows name, title, game and viewers.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.3–0.1.4</div><ul>
+        <li><span lang="fi">Multistream: ääni molemmista + oma mykistysnappi, molempien chatit yhtä aikaa.</span><span lang="en">Multistream: audio from both + per-stream mute button, both chats at once.</span></li>
+        <li><span lang="fi">Kiinnitetty viesti ei enää peitä videota.</span><span lang="en">Pinned message no longer covers the video.</span></li>
+      </ul></div>
+      <div class="row"><div class="v">0.1.2</div><ul>
+        <li><span lang="fi">Korjattu: striimin laatua ei saanut vaihdettua.</span><span lang="en">Fixed: stream quality couldn't be changed.</span></li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo.png" alt="">Chilly</a>
+    <p>
+      <span lang="fi">Chilly on <a href="https://samppalandia.wtf/">SamppaLandian</a> avoimen lähdekoodin harrasteprojekti (<a href="https://github.com/SamppaPappa/chilly" target="_blank" rel="noopener">GitHub · MIT</a> · <a href="https://github.com/SamppaPappa/chilly/blob/main/PRIVACY.md" target="_blank" rel="noopener">Tietosuoja</a>). Ei Twitchin virallinen sovellus, eikä liity Twitch Interactive, Inc:iin. Twitch on Twitch Interactive, Inc:n tavaramerkki.</span>
+      <span lang="en">Chilly is an open-source <a href="https://samppalandia.wtf/">SamppaLandia</a> hobby project (<a href="https://github.com/SamppaPappa/chilly" target="_blank" rel="noopener">GitHub · MIT</a> · <a href="https://github.com/SamppaPappa/chilly/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a>). Not an official Twitch app and not affiliated with Twitch Interactive, Inc. Twitch is a trademark of Twitch Interactive, Inc.</span>
+    </p>
+    <a class="btn discord small" href="https://discord.gg/5qBGnbjMdg" target="_blank" rel="noopener">Discord</a>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"><button class="close" aria-label="Sulje / Close">✕</button><img alt=""></div>
+
+<script src="assets/icons.js?v=9"></script>
+<script src="assets/site.js?v=9"></script>
+<script src="assets/header.js?v=1"></script>
+</body>
+</html>

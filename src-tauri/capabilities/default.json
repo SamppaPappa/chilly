@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "windows": [
+    "main",
+    "popup"
+  ],
+  "webviews": [
+    "main-ui"
+  ],
+  "permissions": [
+    "core:default"
+  ]
+}

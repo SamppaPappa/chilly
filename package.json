@@ -1,0 +1,20 @@
+{
+  "name": "chilly",
+  "version": "0.2.4",
+  "description": "Free open-source Twitch desktop client for Windows",
+  "homepage": "https://samppalandia.wtf/chilly/",
+  "repository": "https://github.com/SamppaPappa/chilly",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "tauri": "tauri",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4"
+  }
+}

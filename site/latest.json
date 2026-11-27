@@ -1,0 +1,11 @@
+{
+  "version": "0.2.4",
+  "notes": "FI: Päivitys- ja äänikorjaukset (striimit sulkeutuvat puhtaasti ennen päivitystä, tray-ikkuna mykistetty) sekä Defender-pakkausasetusten siistiminen.\nEN: Update and audio fixes (clean stream shutdown before updating, muted hidden tray window) plus cleaner release build settings.",
+  "pub_date": "2026-11-27T18:10:07Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUZFRwSTIvU3Q5c1E3M1BWS3RKaGI4QUlvdVlXS0ZEWHliaERJUUFES3crYzhqbWRUc2dwazBjNzBOMjJCcE02NlkwOFVWd0N2Y2tHZXRROTVydTN3UVl0R29sZExRbndnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1ODAyOTc3CWZpbGU6Q2hpbGx5XzAuMi40X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjIuNApSQk02YmY3d1BIcVh2bjNrSjJ4aC9JM2dDUUZOenhYQ09tNXJuOXNMWG01ejh6cGdKNUg3K1M0VEFUUjdzWCtuSkJJSit5Ym5nVjFXVFFhNmZmVmJCZz09Cg==",
+      "url": "https://samppalandia.wtf/chilly/Chilly_0.2.4_x64-setup.exe"
+    }
+  }
+}

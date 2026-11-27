@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chilly</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js"></script>
+  <script src="i18n.js"></script>
+</head>
+<body class="chat-right">
+
+  <!-- Aloitusanimaatio -->
+  <div id="splash" class="hidden">
+    <div class="sp-bg" id="spBg"></div>
+    <div class="sp-mark" id="spMark">
+      <div class="sp-logo" id="spLogo"><img src="logo.png" alt=""><div class="sp-shine" id="spShine"></div></div>
+      <div class="sp-name" id="spName"></div>
+    </div>
+  </div>
+
+  <!-- Kirjautuminen -->
+  <section id="login" class="hidden">
+    <div class="lcard">
+      <img class="hero" src="logo.png" alt="">
+      <h1 data-t="login.title"></h1>
+      <p class="lsub" data-t="login.sub"></p>
+      <div class="ben">
+        <div><i data-i="bell-ring"></i><span data-t="ben.notify"></span></div>
+        <div><i data-i="message-square"></i><span data-t="ben.chat"></span></div>
+        <div><i data-i="gem"></i><span data-t="ben.points"></span></div>
+        <div><i data-i="monitor-play"></i><span data-t="ben.multi"></span></div>
+      </div>
+      <div id="loginIdle">
+        <button id="btnLogin" class="btn twitch wide" data-t="login.button"></button>
+        <p class="foot" data-t="login.foot"></p>
+      </div>
+      <div id="loginWait" class="hidden">
+        <p class="lsub" data-th="login.wait"></p>
+        <div id="userCode" class="code"></div>
+        <div class="waitrow"><span class="spinner"></span><span data-t="login.waiting"></span></div>
+        <div class="row center"><button id="openVerify" class="btn ghost" data-t="login.showWindow"></button><button id="btnCancelLogin" class="btn ghost" data-t="cancel"></button></div>
+      </div>
+      <p id="noClientId" class="warn hidden" data-t="login.noClientId"></p>
+      <p id="loginStatus" class="warn hidden"></p>
+    </div>
+  </section>
+
+  <!-- Sovellus -->
+  <div id="app" class="hidden">
+    <aside id="side">
+      <div class="side-head">
+        <img class="logo" src="logo.png" alt="">
+        <span class="brand">Chilly</span>
+        <span id="liveCount" class="livecount hidden"><span class="dot"></span><span></span></span>
+        <button id="btnDiscover" class="ibtn" data-tt="disc.open"><i data-i="compass"></i></button>
+        <button id="btnCollapse" class="ibtn"></button>
+      </div>
+      <div class="side-tools">
+        <label class="search"><i data-i="search" class="sm"></i><input id="search" type="search" data-tp="side.search" autocomplete="off" spellcheck="false"></label>
+        <div class="chips" id="filter">
+          <button data-f="all" class="chip on" data-t="side.all"></button>
+          <button data-f="live" class="chip" data-t="side.liveOnly"></button>
+          <button data-f="on" class="chip" data-tt="side.notifiedTitle"><i data-i="bell" class="sm"></i><span data-t="side.notified"></span></button>
+        </div>
+      </div>
+      <div id="list" class="list"></div>
+      <div id="empty" class="empty hidden"></div>
+      <div id="toast" class="toast hidden"></div>
+      <div class="me">
+        <span id="meAv" class="av"></span>
+        <div class="who"><b id="meName"></b><span id="meSub"></span></div>
+        <button id="btnSettings" class="ibtn" data-tt="side.settings"><i data-i="settings"></i></button>
+      </div>
+    </aside>
+
+    <section id="main">
+      <header id="bar">
+        <div id="tabs"></div>
+        <div class="spacer"></div>
+        <div class="grp">
+          <button id="btnAdd" class="ibtn hidden" data-tt="bar.add"><i data-i="plus"></i></button>
+          <button id="btnMs" class="tbtn hidden" data-tt="bar.msTitle"><i data-i="columns-2"></i><span class="lbl">Multistream</span><i data-i="chevron-down" class="chev"></i></button>
+          <span id="audioSeg" class="aseg hidden"></span>
+        </div>
+        <span class="sep" id="sep1"></span>
+        <div class="grp">
+          <button id="btnChatMenu" class="tbtn hidden" data-tt="bar.chatMenu"><i data-i="message-square"></i><span class="lbl" data-t="nav.chat"></span><i data-i="chevron-down" class="chev"></i></button>
+          <button id="btnMute" class="ibtn hidden" data-tt="bar.mute"></button>
+          <button id="btnBoost" class="ibtn boost hidden"></button>
+          <button id="btnMore" class="ibtn hidden" data-tt="bar.more"><i data-i="ellipsis"></i></button>
+        </div>
+        <span class="sep" id="sep2"></span>
+        <div class="grp">
+          <button id="btnBack" class="tbtn hidden" data-tt="bar.backTitle"><i data-i="arrow-left"></i><span class="lbl" data-t="bar.back"></span></button>
+          <button id="btnClip" class="tbtn hidden"><i data-i="scissors"></i><span class="lbl" data-t="bar.clip"></span></button>
+          <button id="btnSub" class="tbtn outline hidden" data-tt="bar.subTitle"><i data-i="star"></i><span class="lbl" data-t="bar.sub"></span></button>
+          <button id="btnFollow" class="tbtn twitch hidden"></button>
+        </div>
+
+        <!-- Multistream-säätimet: avautuvat yläpalkin päälle (ei videon päälle, jota natiivit striimit peittäisivät) -->
+        <div id="msBar" class="barover hidden">
+          <span class="ttl"><i data-i="columns-2"></i>Multistream</span>
+          <span class="seg" id="msLayout">
+            <button data-l="side" data-tt="layout.side"><i data-i="columns-2" class="sm"></i><span data-t="layout.side"></span></button>
+            <button data-l="pip" data-tt="layout.pip"><i data-i="picture-in-picture-2" class="sm"></i><span data-t="layout.pip"></span></button>
+            <button data-l="stack" data-tt="layout.stack"><i data-i="rows-2" class="sm"></i><span data-t="layout.stack"></span></button>
+          </span>
+          <button id="msSwap" class="tbtn" data-tt="ms.swap"><i data-i="arrow-left-right"></i><span data-t="ms.swap"></span></button>
+          <span class="sep"></span>
+          <span id="msClose" class="msclose"></span>
+          <span class="spacer"></span>
+          <button id="msDone" class="cx" data-tt="ms.done"><i data-i="x"></i></button>
+        </div>
+
+        <!-- Chat: näkyvyys, paikka, multistreamin chatit ja emojit -->
+        <div id="chatBar" class="barover hidden">
+          <span class="ttl"><i data-i="message-square"></i><span data-t="nav.chat"></span></span>
+          <button id="btnChat" class="tbtn"></button>
+          <span class="sep"></span>
+          <span class="mlbl" data-t="cb.side"></span>
+          <span class="seg" id="cbSide">
+            <button data-side="left" data-tt="side.left"><i data-i="panel-left" class="sm"></i><span data-t="side.left"></span></button>
+            <button data-side="below" data-tt="side.below"><i data-i="panel-bottom" class="sm"></i><span data-t="side.below"></span></button>
+            <button data-side="right" data-tt="side.right"><i data-i="panel-right" class="sm"></i><span data-t="side.right"></span></button>
+          </span>
+          <span id="cbMulti" class="cbgrp hidden">
+            <span class="sep"></span>
+            <span class="mlbl">Multistream</span>
+            <span class="seg" id="msChat">
+              <button data-c="0" data-tt="ms.chatTabs"><i data-i="message-square" class="sm"></i><span data-t="ms.chatTabs"></span></button>
+              <button data-c="1" data-tt="ms.chatBoth"><i data-i="messages-square" class="sm"></i><span data-t="ms.chatBoth"></span></button>
+            </span>
+          </span>
+          <span class="sep"></span>
+          <span class="mlbl" data-t="cb.emotes"></span>
+          <span class="seg" id="cbEmotes">
+            <button data-e="bttv" data-tt="chat.bttv">BTTV</button>
+            <button data-e="7tv" data-tt="chat.7tv">7TV</button>
+          </span>
+          <span class="sep"></span>
+          <button id="btnChatSettings" class="tbtn" data-tt="cb.moreT"><i data-i="settings" class="sm"></i><span class="lbl" data-t="cb.more"></span></button>
+          <span class="spacer"></span>
+          <button class="cx" data-close-bar data-tt="ms.done"><i data-i="x"></i></button>
+        </div>
+
+        <!-- Lisää: harvemmin käytetyt napit -->
+        <div id="moreBar" class="barover hidden">
+          <span class="ttl"><i data-i="ellipsis"></i><span data-t="bar.moreT"></span></span>
+          <button id="btnReload" class="tbtn"><i data-i="rotate-cw"></i><span class="lbl" data-t="more.reload"></span></button>
+          <button id="btnPop" class="tbtn"></button>
+          <button id="btnModView" class="tbtn" data-tt="bar.modView"><i data-i="shield"></i><span class="lbl">Mod View</span></button>
+          <span class="spacer"></span>
+          <button class="cx" data-close-bar data-tt="ms.done"><i data-i="x"></i></button>
+        </div>
+
+        <!-- Klippi: otsikko + pituus suoraan yläpalkissa -->
+        <div id="clipBar" class="barover hidden">
+          <span class="ttl"><i data-i="scissors"></i><span id="clipWho"></span></span>
+          <input id="clipTitle" type="text" maxlength="140" data-tp="clip.ph" autocomplete="off" spellcheck="false">
+          <span class="seg" id="clipLen">
+            <button data-s="15">15 s</button><button data-s="30" class="on">30 s</button><button data-s="45">45 s</button><button data-s="60">60 s</button>
+          </span>
+          <span class="hint" id="clipHint"></span>
+          <button id="clipGo" class="go"><i data-i="scissors"></i><span data-t="clip.go"></span></button>
+          <button id="clipCancel" class="cx" data-tt="clip.cancel"><i data-i="x"></i></button>
+        </div>
+      </header>
+
+      <div id="stage">
+       <div id="layout">
+        <div id="video">
+          <div id="emptyStage" class="stage-msg">
+            <img src="logo.png" alt="">
+            <h2 data-t="stage.title"></h2>
+            <p data-t="stage.sub"></p>
+            <div id="webPrompt" class="web-prompt hidden">
+              <b data-t="web.title"></b>
+              <p data-t="web.sub"></p>
+              <div class="ben small">
+                <div><i data-i="message-square"></i><span data-t="web.chat"></span></div>
+                <div><i data-i="gem"></i><span data-t="web.points"></span></div>
+                <div><i data-i="clock"></i><span data-t="web.time"></span></div>
+              </div>
+              <div class="row center"><button id="btnWebLogin" class="btn twitch" data-t="login.button"></button><button id="btnWebLater" class="btn ghost" data-t="web.later"></button></div>
+            </div>
+          </div>
+          <div id="chanPage" class="hidden"></div>
+          <div id="poppedStage" class="stage-msg hidden">
+            <i data-i="picture-in-picture-2" class="xl"></i>
+            <h2 data-t="popped.title"></h2>
+            <p data-t="popped.sub"></p>
+            <button id="btnPopIn" class="btn primary" data-t="popped.button"></button>
+          </div>
+        </div>
+        <div id="splitter" data-tt="splitter"></div>
+        <div id="chat">
+          <div id="chatTabs" class="hidden"></div>
+          <div id="chatView"><div class="chat-ph" data-t="chat.loading"></div></div>
+        </div>
+       </div>
+
+        <!-- Multistream: toisen streamin valinta -->
+        <div id="picker" class="overlay hidden">
+          <div class="modal">
+            <div class="modal-h"><b data-t="pick.title"></b><button id="btnClosePicker" class="ibtn" data-tt="close"><i data-i="x"></i></button></div>
+            <label class="search"><i data-i="search" class="sm"></i><input id="pickSearch" type="search" data-tp="side.search" autocomplete="off" spellcheck="false"></label>
+            <div id="pickList" class="list pick-list"></div>
+          </div>
+        </div>
+
+        <!-- Löydä: uusien striimaajien etsiminen (streamit piilotetaan tämän ajaksi) -->
+        <div id="discover" class="hidden">
+          <div class="disc-head">
+            <div><h3 data-t="disc.title"></h3><p class="sub" data-t="disc.sub"></p></div>
+            <button id="btnCloseDiscover" class="ibtn" data-tt="close"><i data-i="x"></i></button>
+          </div>
+          <div class="disc-filters">
+            <div class="catbox">
+              <label class="search" id="discGameBox"><i data-i="search" class="sm"></i><input id="discGame" type="search" data-tp="disc.game" autocomplete="off" spellcheck="false"></label>
+              <div id="discGameSel" class="catsel hidden"></div>
+              <div id="discSug" class="suggest hidden"></div>
+            </div>
+            <select id="discLang"><option value="" data-t="disc.allLangs"></option><option value="fi">Suomi</option><option value="en">English</option><option value="sv">Svenska</option><option value="no">Norsk</option><option value="da">Dansk</option><option value="de">Deutsch</option><option value="es">Español</option><option value="fr">Français</option><option value="it">Italiano</option><option value="pt">Português</option><option value="pl">Polski</option><option value="ru">Русский</option><option value="tr">Türkçe</option><option value="ja">日本語</option><option value="ko">한국어</option></select>
+            <span class="seg" id="discSort">
+              <button data-sort="most" class="on"><i data-i="trending-up" class="sm"></i><span data-t="disc.most"></span></button>
+              <button data-sort="fewest"><i data-i="trending-down" class="sm"></i><span data-t="disc.fewest"></span></button>
+            </span>
+            <span class="toggles">
+              <label class="livetog"><span data-t="disc.notFollowed"></span><span class="switch"><input type="checkbox" id="discNotFollowed"><span></span></span></label>
+              <label class="livetog"><span data-t="disc.liveOnly"></span><span class="switch"><input type="checkbox" id="discLive" checked><span></span></span></label>
+            </span>
+          </div>
+          <div id="discQueryRow" class="hidden">
+            <label class="search"><i data-i="users-round" class="sm"></i><input id="discQuery" type="search" data-tp="disc.query" autocomplete="off" spellcheck="false"></label>
+          </div>
+          <div id="discTop" class="topcats"></div>
+          <div id="discGrid" class="disc-grid"></div>
+          <div id="discEmpty" class="empty hidden"></div>
+          <div id="discMoreRow" class="row center hidden"><button id="discMore" class="btn ghost" data-t="disc.more"></button></div>
+        </div>
+
+        <!-- Asetukset (streamit piilotetaan tämän ajaksi) -->
+        <div id="settings" class="hidden">
+          <nav class="snav">
+            <b data-t="set.title"></b>
+            <button data-sec="general" class="on"><i data-i="settings"></i><span data-t="nav.general"></span></button>
+            <button data-sec="notif"><i data-i="bell"></i><span data-t="nav.notif"></span></button>
+            <button data-sec="view"><i data-i="monitor-play"></i><span data-t="nav.view"></span></button>
+            <button data-sec="multi"><i data-i="columns-2"></i><span data-t="nav.multi"></span></button>
+            <button data-sec="chat"><i data-i="message-square"></i><span data-t="nav.chat"></span></button>
+            <button data-sec="claim"><i data-i="gem"></i><span data-t="nav.claim"></span></button>
+            <button data-sec="streak"><i data-i="streak"></i><span data-t="nav.streak"></span></button>
+            <button data-sec="mod"><i data-i="shield"></i><span data-t="nav.mod"></span></button>
+            <button data-sec="account"><i data-i="user-round"></i><span data-t="nav.account"></span></button>
+            <button data-sec="about"><i data-i="info"></i><span data-t="nav.about"></span></button>
+          </nav>
+          <div class="sbody">
+            <button id="btnCloseSettings" class="ibtn sclose" data-tt="set.close"><i data-i="x"></i></button>
+
+            <section data-sec="general">
+              <h3 data-t="nav.general"></h3>
+              <p class="sub" data-t="gen.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="view.lang"></b><span data-t="view.langSub"></span></div>
+                  <span class="seg" id="langSeg">
+                    <button data-lang="fi">Suomi</button>
+                    <button data-lang="en">English</button>
+                  </span></div>
+                <div class="it"><div class="l"><b data-t="view.autostart"></b><span data-t="view.autostartSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="autostart"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="upd.title"></b><span id="updStatus" data-t="upd.sub"></span></div>
+                  <button id="btnCheckUpd" class="btn ghost sm" data-t="upd.check"></button>
+                  <button id="btnInstallUpd" class="btn primary sm hidden" data-t="upd.install"></button></div>
+                <div class="it hidden" id="updNotesRow"><div class="l"><b data-t="upd.notes"></b><span id="updNotes" style="white-space:pre-line"></span></div></div>
+              </div>
+            </section>
+
+            <section data-sec="notif" class="hidden">
+              <h3 data-t="nav.notif"></h3>
+              <p class="sub" data-t="notif.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="notif.sound"></b><span data-t="notif.soundSub"></span></div>
+                  <select id="globalSound"></select><button id="btnTest" class="btn ghost sm" data-t="test"></button></div>
+                <div class="it"><div class="l"><b data-t="notif.dur"></b><span data-t="notif.durSub"></span></div>
+                  <select id="popupSecs"><option value="5" data-t="dur.5"></option><option value="10" data-t="dur.10"></option><option value="20" data-t="dur.20"></option><option value="60" data-t="dur.60"></option><option value="0" data-t="dur.0"></option></select></div>
+                <div class="it"><div class="l"><b data-t="notif.interval"></b><span data-t="notif.intervalSub"></span></div>
+                  <select id="interval"><option value="30" data-t="int.30"></option><option value="60" data-t="int.60"></option><option value="120" data-t="int.120"></option><option value="300" data-t="int.300"></option><option value="900" data-t="int.900"></option></select></div>
+              </div>
+            </section>
+
+            <section data-sec="view" class="hidden">
+              <h3 data-t="nav.view"></h3>
+              <p class="sub" data-t="view.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="view.chatSide"></b><span data-t="view.chatSideSub"></span></div>
+                  <span class="seg" id="chatSide">
+                    <button data-side="left"><i data-i="panel-left" class="sm"></i><span data-t="side.left"></span></button>
+                    <button data-side="below"><i data-i="panel-bottom" class="sm"></i><span data-t="side.below"></span></button>
+                    <button data-side="right"><i data-i="panel-right" class="sm"></i><span data-t="side.right"></span></button>
+                  </span></div>
+                <div class="it"><div class="l"><b data-t="boost.title"></b><span data-t="boost.sub"></span></div>
+                  <span class="seg" id="boostSeg">
+                    <button data-b="100">100 %</button><button data-b="150">150 %</button><button data-b="200">200 %</button><button data-b="300">300 %</button>
+                  </span></div>
+                <div class="it"><div class="l"><b data-t="view.adblock"></b><span data-t="view.adblockSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="adblock"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="view.unlimited"></b><span data-t="view.unlimitedSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="unlimitedTabs"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="view.hwAccel"></b><span data-t="view.hwAccelSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="hwAccel"><span></span></label></div>
+              </div>
+            </section>
+
+            <section data-sec="multi" class="hidden">
+              <h3 data-t="nav.multi"></h3>
+              <p class="sub" data-t="multi.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="view.multiAudio"></b><span data-t="view.multiAudioSub"></span></div>
+                  <span class="seg" id="multiAudio">
+                    <button data-v="0"><i data-i="volume-2" class="sm"></i><span data-t="view.audioOne"></span></button>
+                    <button data-v="1"><i data-i="audio-lines" class="sm"></i><span data-t="view.audioBoth"></span></button>
+                  </span></div>
+                <div class="it"><div class="l"><b data-t="view.multiChat"></b><span data-t="view.multiChatSub"></span></div>
+                  <span class="seg" id="multiChat">
+                    <button data-v="0"><i data-i="message-square" class="sm"></i><span data-t="view.chatTabs"></span></button>
+                    <button data-v="1"><i data-i="messages-square" class="sm"></i><span data-t="view.chatBoth"></span></button>
+                  </span></div>
+              </div>
+              <p class="hint" data-t="multi.hint"></p>
+            </section>
+
+            <section data-sec="chat" class="hidden">
+              <h3 data-t="nav.chat"></h3>
+              <p class="sub" data-t="chat.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="chat.bttv"></b><span data-t="chat.bttvSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="emoteBttv"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="chat.7tv"></b><span data-t="chat.7tvSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="emote7tv"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="chat.adv"></b><span data-t="chat.advSub"></span></div>
+                  <button id="btnChatSettings2" class="btn ghost sm" data-t="chat.advBtn"></button></div>
+              </div>
+              <p class="hint" data-t="chat.hint"></p>
+            </section>
+
+            <section data-sec="claim" class="hidden">
+              <h3 data-t="nav.claim"></h3>
+              <p class="sub" data-t="claim.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="claim.bonus"></b><span data-t="claim.bonusSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="autoBonus"><span></span></label></div>
+                <div class="it"><div class="l"><b data-t="claim.drops"></b><span data-t="claim.dropsSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="autoDrops"><span></span></label></div>
+              </div>
+            </section>
+
+            <section data-sec="streak" class="hidden">
+              <h3 data-t="nav.streak"></h3>
+              <p class="sub" data-t="streak.sub"></p>
+              <div class="grp-box">
+                <div id="streakList" class="streak-list"></div>
+              </div>
+              <p class="hint" data-t="streak.hint"></p>
+            </section>
+
+            <section data-sec="mod" class="hidden">
+              <h3 data-t="nav.mod"></h3>
+              <p class="sub" data-t="mod.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="mod.view"></b><span data-t="mod.viewSub"></span></div>
+                  <label class="switch"><input type="checkbox" id="modView"><span></span></label></div>
+                <div class="it hidden" id="modScopeRow"><div class="l"><b data-t="mod.scope"></b><span data-t="mod.scopeSub"></span></div>
+                  <button id="btnModScope" class="btn twitch sm" data-t="mod.scopeBtn"></button></div>
+                <div class="it hidden" id="modListRow"><div class="l"><b data-t="mod.list"></b><span id="modList"></span></div>
+                  <button id="btnModRefresh" class="ibtn" data-tt="mod.refresh"><i data-i="rotate-cw"></i></button></div>
+              </div>
+            </section>
+
+            <section data-sec="account" class="hidden">
+              <h3 data-t="nav.account"></h3>
+              <p class="sub" data-t="acc.sub"></p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="acc.account"></b><span id="account"></span></div>
+                  <button id="btnLogout" class="btn ghost danger sm"><i data-i="log-out" class="sm"></i><span data-t="acc.logout"></span></button></div>
+                <div class="it"><div class="l"><b data-t="acc.web"></b><span id="webStatus"></span></div>
+                  <button id="btnWebLogin2" class="btn twitch sm hidden" data-t="login.button"></button></div>
+              </div>
+            </section>
+
+            <section data-sec="about" class="hidden">
+              <h3 data-t="nav.about"></h3>
+              <p class="sub" id="aboutVer">Chilly</p>
+              <div class="grp-box">
+                <div class="it"><div class="l"><b data-t="about.site"></b><span data-t="about.siteSub"></span></div>
+                  <button id="btnWebsite" class="btn ghost sm"><i data-i="external-link" class="sm"></i><span>samppalandia.wtf/chilly</span></button></div>
+                <div class="it"><div class="l"><b data-t="about.log"></b><span data-t="about.logSub"></span></div>
+                  <button id="btnLogDir" class="btn ghost sm"><i data-i="folder-open" class="sm"></i><span data-t="about.logBtn"></span></button></div>
+                <div class="it"><div class="l"><b data-t="about.close"></b><span data-t="about.closeSub"></span></div></div>
+                <div class="it"><div class="l"><b data-t="about.credits"></b><span data-t="about.creditsSub"></span></div></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

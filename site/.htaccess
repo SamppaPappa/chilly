@@ -1,0 +1,4 @@
+# Chilly: sivu ja päivitystieto tarkistetaan aina palvelimelta
+<FilesMatch "\.(html|json)$">
+  Header set Cache-Control "no-cache"
+</FilesMatch>
