@@ -35,6 +35,15 @@ npx tauri build
 
 Chilly communicates only with Twitch (`id.twitch.tv`, `api.twitch.tv`, `twitch.tv`), FrankerFaceZ CDN (for chat emotes), and `https://samppalandia.wtf/chilly/latest.json` (for update checks). No telemetry, analytics, or user credentials are ever sent to the author or any third party. See [PRIVACY.md](PRIVACY.md) for full details.
 
+## Code Signing Policy
+
+Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+
+- **Committers & Reviewers:** Repository maintainers ([SamppaPappa](https://github.com/SamppaPappa))
+- **Approvers:** Repository owners ([SamppaPappa](https://github.com/SamppaPappa))
+- **Build & Release Process:** Official Windows release binaries are built reproducibly from this repository via GitHub Actions (`.github/workflows/julkaisu.yml`).
+- **Privacy Policy:** This application does not transfer user data to any developer-controlled servers; see [PRIVACY.md](PRIVACY.md) for details on Twitch and FrankerFaceZ connections.
+
 ## Third-party components
 
 - Icons: [Lucide](https://lucide.dev/) (ISC)
