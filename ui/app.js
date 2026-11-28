@@ -159,8 +159,17 @@ function render() {
   renderMods();
   $("adblock").checked = !!S.adblock;
   $("unlimitedTabs").checked = !!S.unlimitedTabs;
-  $("aboutVer").textContent = "Chilly " + (S.version || "");
+  $("aboutVer").textContent = "Chilly " + (S.version || "") + (S.isStore ? " (Store)" : "");
   $("autostart").checked = S.autostart;
+  if (S.isStore) {
+    $("btnCheckUpd").classList.add("hidden");
+    $("btnInstallUpd").classList.add("hidden");
+    $("updNotesRow").classList.add("hidden");
+    $("updStatus").textContent = t("upd.storeSub");
+    $("autostartWrap").classList.add("hidden");
+    $("btnStartupSettings").classList.remove("hidden");
+    $("autostartSub").textContent = t("view.autostartStoreSub");
+  }
   $("autoBonus").checked = S.autoBonus;
   $("autoDrops").checked = S.autoDrops;
   $("emoteBttv").checked = S.emoteBttv;
@@ -1467,6 +1476,7 @@ $("autostart").onchange = async (e) => {
   try { await invoke("set_autostart", { on: e.target.checked }); }
   catch (err) { toast(String(err)); }
 };
+$("btnStartupSettings").onclick = () => invoke("open_startup_settings").catch((err) => toast(String(err)));
 $("btnLogout").onclick = () => { if (confirm(t("confirm.logout"))) invoke("logout"); };
 
 // ---------- Kirjautuminen ----------

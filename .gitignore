@@ -15,6 +15,11 @@
 *.pem
 *.pfx
 *.p12
+*.cer
+*.msix
+*.msixbundle
+/msix/staging
+/msix/store.local.json
 
 # Asentimet ja vanhat varmuuskopiot (julkaisut tulevat GitHub Releasesista)
 *-setup.exe

@@ -21,6 +21,28 @@ use tauri_plugin_autostart::ManagerExt as _;
 use tauri_plugin_dialog::DialogExt as _;
 use twitch::{ApiError, Stream};
 
+/// Palauttaa true, jos Chilly pyörii Microsoft Store / MSIX -pakettina.
+pub fn is_msix() -> bool {
+    static CACHED: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *CACHED.get_or_init(|| {
+        #[cfg(target_os = "windows")]
+        {
+            #[link(name = "kernel32")]
+            extern "system" {
+                fn GetCurrentPackageFullName(len: *mut u32, name: *mut u16) -> i32;
+            }
+            let mut len: u32 = 0;
+            // APPMODEL_ERROR_NO_PACKAGE = 15700; 0 (OK) tai 122 (ERROR_INSUFFICIENT_BUFFER) = MSIX-paketti
+            let rc = unsafe { GetCurrentPackageFullName(&mut len, std::ptr::null_mut()) };
+            rc != 15700
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            false
+        }
+    })
+}
+
 const FOLLOW_REFRESH: Duration = Duration::from_secs(10 * 60);
 /// Jos stream katkeaa ja palaa tämän ajan sisällä, ei uutta ilmoitusta.
 const RECONNECT_GRACE: Duration = Duration::from_secs(10 * 60);
@@ -683,6 +705,7 @@ fn get_state(app: AppHandle, st: tauri::State<'_, St>) -> Value {
         "streakOrder": i.settings.streak_order,
         "hwAccelActive": viewer::browser_args().contains("--disable-gpu") == false,
         "autostart": autostart,
+        "isStore": is_msix(),
         "loaded": i.seeded,
         "channels": channels,
     })
@@ -1055,6 +1078,12 @@ fn open_website() {
 fn open_log_dir(st: tauri::State<'_, St>) -> Result<(), String> {
     let _ = std::fs::create_dir_all(&st.data_dir);
     tauri_plugin_opener::open_path(&st.data_dir, None::<&str>).map_err(|e| e.to_string())
+}
+
+/// Avaa Windowsin Käynnistyssovellukset-asetukset (MSIX / Microsoft Store -versiolle)
+#[tauri::command]
+fn open_startup_settings() -> Result<(), String> {
+    tauri_plugin_opener::open_url("ms-settings:startupapps", None::<&str>).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
@@ -1705,8 +1734,8 @@ fn main() {
             settings.lang = lang;
             i18n::set(&settings.lang);
             log::info(format!(
-                "Chilly {} started (lang={}, hw_accel={}, adblock={}, hidden={hidden})",
-                app.package_info().version, settings.lang, settings.hw_accel, settings.adblock
+                "Chilly {} started (lang={}, hw_accel={}, adblock={}, hidden={hidden}, msix={})",
+                app.package_info().version, settings.lang, settings.hw_accel, settings.adblock, is_msix()
             ));
             viewer::init_browser_args(&settings.lang, settings.hw_accel);
             viewer::set_adblock(settings.adblock);
@@ -1889,6 +1918,7 @@ fn main() {
             check_update,
             open_website,
             open_log_dir,
+            open_startup_settings,
             install_update,
             popup_layout,
             refresh_now,

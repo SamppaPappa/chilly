@@ -42,6 +42,9 @@ fn updater(app: &AppHandle) -> Result<tauri_plugin_updater::Updater, String> {
 /// Hakee uusimman version tiedot.
 pub async fn check(app: &AppHandle) -> Result<UpdInfo, String> {
     let current = app.package_info().version.to_string();
+    if crate::is_msix() {
+        return Ok(UpdInfo { available: false, current: current.clone(), version: current, notes: String::new() });
+    }
     let upd = updater(app)?.check().await.map_err(|e| {
         crate::log::warn(format!("update check failed: {e}"));
         e.to_string()
@@ -60,6 +63,12 @@ pub async fn check(app: &AppHandle) -> Result<UpdInfo, String> {
 /// Lataa, tarkistaa allekirjoituksen ja asentaa päivityksen. Windowsissa asennusohjelma
 /// käynnistyy ja Chilly sulkeutuu; asennuksen jälkeen Chilly käynnistyy uudelleen.
 pub async fn install(app: &AppHandle) -> Result<(), String> {
+    if crate::is_msix() {
+        return Err(crate::i18n::tr(
+            "Päivitykset asennetaan Microsoft Storen kautta.",
+            "Updates are installed through Microsoft Store.",
+        ).into());
+    }
     let pending = app.state::<UpdSt>().pending.lock().unwrap().take();
     let upd = match pending {
         Some(u) => u,
@@ -95,6 +104,9 @@ pub async fn install(app: &AppHandle) -> Result<(), String> {
 /// Taustatarkistus: käynnistyksen jälkeen ja kerran päivässä. Ilmoitus samasta versiosta
 /// näytetään kerran per tarkistuskierros (eli "Myöhemmin" siirtää muistutusta päivällä).
 pub fn start_background(app: AppHandle) {
+    if crate::is_msix() {
+        return;
+    }
     tauri::async_runtime::spawn(async move {
         tokio::time::sleep(Duration::from_secs(30)).await;
         loop {
